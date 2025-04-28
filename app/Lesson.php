@@ -63,18 +63,18 @@ class Lesson extends Model
     }
 
     // Filter berdasarkan role atau class_id
-    public function CalendarByRoleOrClassId($query)
+    public function scopeCalendarByRoleOrClassId($query)
     {
         return $query->when(!request()->input('class_id'), function ($query) {
             $query->when(auth()->user()->is_teacher, function ($query) {
                 $query->where('teacher_id', auth()->user()->id);
             })
-            ->when(auth()->user()->is_student, function ($query) {
-                $query->where('class_id', auth()->user()->class_id ?? '0');
-            });
+                ->when(auth()->user()->is_student, function ($query) {
+                    $query->where('class_id', auth()->user()->class_id ?? '0');
+                });
         })
-        ->when(request()->input('class_id'), function ($query) {
-            $query->where('class_id', request()->input('class_id'));
-        });
+            ->when(request()->input('class_id'), function ($query) {
+                $query->where('class_id', request()->input('class_id'));
+            });
     }
 }
