@@ -27,7 +27,22 @@ class CalendarController extends Controller
             $query->where('id', 3); // ID 3 = guru
         })->pluck('name', 'id');
 
-        return view('admin.calendar', compact('weekDays', 'calendarData', 'classes', 'teachers'));
+        $lessons = Lesson::all();
+
+        $sessions = [
+            '1' => '08:00 - 08:50',
+            '2' => '09:00 - 09:50',
+            '3' => '10:00 - 10:50',
+            '4' => '11:00 - 11:50',
+            '5' => '12:00 - 12:50',
+            '6' => '13:00 - 13:50',
+            '7' => '14:00 - 14:50',
+            '8' => '15:00 - 15:50',
+            '9' => '16:00 - 16:50',
+            '10' => '17:00 - 17:50',
+        ];
+
+        return view('admin.calendar', compact('weekDays', 'calendarData', 'classes', 'teachers', 'lessons', 'sessions'));
     }
 
     public function clearLessons()
