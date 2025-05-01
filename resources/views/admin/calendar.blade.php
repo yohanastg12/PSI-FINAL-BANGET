@@ -145,6 +145,26 @@
                                             @csrf
                                             <div class="form-group">
                                                 <label class="required"
+                                                    for="study_program_id">{{ trans('cruds.lesson.fields.study_program') }}</label>
+                                                <select
+                                                    class="form-control select2 {{ $errors->has('studyProgram') ? 'is-invalid' : '' }}"
+                                                    name="study_program_id" id="class_id" required>
+                                                    @foreach ($studyPrograms as $id => $studyProgram)
+                                                        <option value="{{ $id }}"
+                                                            {{ old('study_program_id') == $id ? 'selected' : '' }}>
+                                                            {{ $studyProgram }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @if ($errors->has('studyProgram'))
+                                                    <div class="invalid-feedback">
+                                                        {{ $errors->first('studyProgram') }}
+                                                    </div>
+                                                @endif
+                                                <span
+                                                    class="help-block">{{ trans('cruds.lesson.fields.class_helper') }}</span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="required"
                                                     for="class_id">{{ trans('cruds.lesson.fields.class') }}</label>
                                                 <select
                                                     class="form-control select2 {{ $errors->has('class') ? 'is-invalid' : '' }}"

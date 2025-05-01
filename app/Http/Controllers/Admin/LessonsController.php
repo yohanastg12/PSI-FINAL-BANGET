@@ -47,6 +47,7 @@ class LessonsController extends Controller
     {
         $request->validate([
             'weekday_id' => 'required',
+            'study_program_id' => 'required',
             'session_id' => 'required',
             'class_id' => 'required',
             'course_id' => 'required',
@@ -55,7 +56,8 @@ class LessonsController extends Controller
 
         // Simpan data lesson dengan session_id yang dipilih
         Lesson::create([
-            'weekday_id' => $request->course_id,
+            'weekday_id' => $request->weekday_id,
+            'study_program_id' => $request->study_program_id,
             'class_id' => $request->class_id,
             'teacher_id' => $request->teacher_id,
             'course_id' => $request->course_id,

@@ -81,6 +81,8 @@ return [
             'course_helper' => '',
             'session' => 'Session',
             'session_helper' => '',
+            'study_program' => 'Study Program',
+            'study_program_helper' => '',
             'start_time' => 'Start Time',
             'start_time_helper' => '',
             'end_time' => 'End Time',

@@ -21,6 +21,7 @@ class Lesson extends Model
         'name',
         'weekday_id',
         'class_id',
+        'study_program_id',
         'teacher_id',
         'course_id',
         'session_id',
@@ -42,6 +43,10 @@ class Lesson extends Model
         return $this->belongsTo(Session::class, 'session_id');
     }
 
+    public function studyProgram()
+    {
+        return $this->belongsTo(StudyProgram::class, 'study_program_id');
+    }
 
     public function weekday()
     {

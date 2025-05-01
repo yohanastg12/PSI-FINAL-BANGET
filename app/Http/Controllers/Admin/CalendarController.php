@@ -6,6 +6,7 @@ use App\Course;
 use App\Http\Controllers\Controller;
 use App\Lesson;
 use App\Session;
+use App\StudyProgram;
 use App\WeekDay;
 use App\Services\CalendarService;
 
@@ -42,7 +43,9 @@ class CalendarController extends Controller
 
         $weekdays = Weekday::orderBy('id')->pluck('name', 'id')->toArray();
 
-        return view('admin.calendar', compact('weekDays', 'calendarData', 'classes', 'teachers', 'lessons', 'sessions', 'courses', 'weekdays'));
+        $studyPrograms = StudyProgram::pluck('name', 'id');
+
+        return view('admin.calendar', compact('weekDays', 'calendarData', 'classes', 'teachers', 'lessons', 'sessions', 'courses', 'weekdays', 'studyPrograms'));
     }
 
     public function clearLessons()
