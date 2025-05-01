@@ -25,8 +25,15 @@
         <body class="bg-gray-100">
             <div class="container mx-auto p-4">
                 <div class="bg-white shadow-md rounded-lg p-6">
-                    <h2 class="text-2xl font-bold mb-4">{{ trans('cruds.lesson.title_singular') }} {{ trans('global.list') }}
-                    </h2>
+                    <div>
+                        <h2 class="text-2xl font-bold mb-4">{{ trans('cruds.lesson.title_singular') }}
+                            {{ trans('global.list') }}
+                        </h2>
+                        <button id="modalBtnAddLesson" type="button" style="float: right;"
+                            class="ml-2 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition duration-200">Add
+                            Lesson</button>
+                    </div>
+
                     <form method="GET" action="">
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
                             <div>
@@ -62,9 +69,6 @@
                                     class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition duration-200">
                                     <i class="fas fa-filter mr-2"></i>Filter
                                 </button>
-                                <button id="modalBtnAddLesson" type="button"
-                                    class="ml-2 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition duration-200">Add
-                                    Lesson</button>
                             </div>
                         </div>
                     </form>
