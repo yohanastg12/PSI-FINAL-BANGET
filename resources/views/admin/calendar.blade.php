@@ -134,128 +134,126 @@
                     <div
                         class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                         <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                            <div class="sm:flex sm:items-start">
-                                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                    <h3 class="text-lg leading-6 font-medium text-gray-900">
-                                        Tambah Pelajaran Baru
-                                    </h3>
-                                    <div class="mt-2">
-                                        <div class="card-body">
-                                            <form method="POST" action="{{ route('admin.lessons.store') }}"
-                                                enctype="multipart/form-data">
-                                                @csrf
-                                                <div class="form-group">
-                                                    <label class="required"
-                                                        for="class_id">{{ trans('cruds.lesson.fields.class') }}</label>
-                                                    <select
-                                                        class="form-control select2 {{ $errors->has('class') ? 'is-invalid' : '' }}"
-                                                        name="class_id" id="class_id" required>
-                                                        @foreach ($classes as $id => $class)
-                                                            <option value="{{ $id }}"
-                                                                {{ old('class_id') == $id ? 'selected' : '' }}>
-                                                                {{ $class }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @if ($errors->has('class'))
-                                                        <div class="invalid-feedback">
-                                                            {{ $errors->first('class') }}
-                                                        </div>
-                                                    @endif
-                                                    <span
-                                                        class="help-block">{{ trans('cruds.lesson.fields.class_helper') }}</span>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="required"
-                                                        for="teacher_id">{{ trans('cruds.lesson.fields.teacher') }}</label>
-                                                    <select
-                                                        class="form-control select2 {{ $errors->has('teacher') ? 'is-invalid' : '' }}"
-                                                        name="teacher_id" id="teacher_id" required>
-                                                        @foreach ($teachers as $id => $teacher)
-                                                            <option value="{{ $id }}"
-                                                                {{ old('teacher_id') == $id ? 'selected' : '' }}>
-                                                                {{ $teacher }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @if ($errors->has('teacher'))
-                                                        <div class="invalid-feedback">
-                                                            {{ $errors->first('teacher') }}
-                                                        </div>
-                                                    @endif
-                                                    <span
-                                                        class="help-block">{{ trans('cruds.lesson.fields.teacher_helper') }}</span>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="required"
-                                                        for="weekday_id">{{ trans('cruds.lesson.fields.weekday') }}</label>
-                                                    <select
-                                                        class="form-control select2 {{ $errors->has('weekday') ? 'is-invalid' : '' }}"
-                                                        name="weekday_id" id="weekday_id" required>
-                                                        @foreach ($weekdays as $id => $weekday)
-                                                            <option value="{{ $id }}"
-                                                                {{ old(key: 'weekday_id') == $id ? 'selected' : '' }}>
-                                                                {{ $weekday }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @if ($errors->has('weekday'))
-                                                        <div class="invalid-feedback">
-                                                            {{ $errors->first('weekday') }}
-                                                        </div>
-                                                    @endif
-                                                    <span
-                                                        class="help-block">{{ trans('cruds.lesson.fields.weekday_helper') }}</span>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="required"
-                                                        for="course_id">{{ trans('cruds.lesson.fields.course') }}</label>
-                                                    <select
-                                                        class="form-control select2 {{ $errors->has('course') ? 'is-invalid' : '' }}"
-                                                        name="course_id" id="course_id" required>
-                                                        @foreach ($courses as $id => $course)
-                                                            <option value="{{ $id }}"
-                                                                {{ old('course_id') == $id ? 'selected' : '' }}>
-                                                                {{ $course }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @if ($errors->has('course'))
-                                                        <div class="invalid-feedback">
-                                                            {{ $errors->first('course') }}
-                                                        </div>
-                                                    @endif
-                                                    <span
-                                                        class="help-block">{{ trans('cruds.lesson.fields.course_helper') }}</span>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="required"
-                                                        for="session_id">{{ trans('cruds.lesson.fields.session') }}</label>
-                                                    <select
-                                                        class="form-control select2 {{ $errors->has('session_id') ? 'is-invalid' : '' }}"
-                                                        name="session_id" id="session_id" required>
-                                                        @foreach ($sessions as $id => $session)
-                                                            <option value="{{ $id }}"
-                                                                {{ old('session_id') == $id ? 'selected' : '' }}>
-                                                                {{ $session }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @if ($errors->has('session_id'))
-                                                        <div class="invalid-feedback">
-                                                            {{ $errors->first('session_id') }}
-                                                        </div>
-                                                    @endif
-                                                    <span
-                                                        class="help-block">{{ trans('cruds.lesson.fields.session_helper') }}</span>
-                                                </div>
-                                                <div class="form-group">
-                                                    <button type="button" id="closeModalBtn"
-                                                        class="inline-flex justify-center px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 transition duration-150">
-                                                        Batal
-                                                    </button>
-                                                    <button
-                                                        class="inline-flex justify-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150">
-                                                        {{ trans('global.save') }}
-                                                    </button>
-                                                </div>
-                                            </form>
-                                        </div>
+                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900">
+                                    Tambah Pelajaran Baru
+                                </h3>
+                                <div class="mt-2">
+                                    <div class="card-body justify-content-center align-items-center">
+                                        <form method="POST" action="{{ route('admin.lessons.store') }}"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="form-group">
+                                                <label class="required"
+                                                    for="class_id">{{ trans('cruds.lesson.fields.class') }}</label>
+                                                <select
+                                                    class="form-control select2 {{ $errors->has('class') ? 'is-invalid' : '' }}"
+                                                    name="class_id" id="class_id" required>
+                                                    @foreach ($classes as $id => $class)
+                                                        <option value="{{ $id }}"
+                                                            {{ old('class_id') == $id ? 'selected' : '' }}>
+                                                            {{ $class }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @if ($errors->has('class'))
+                                                    <div class="invalid-feedback">
+                                                        {{ $errors->first('class') }}
+                                                    </div>
+                                                @endif
+                                                <span
+                                                    class="help-block">{{ trans('cruds.lesson.fields.class_helper') }}</span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="required"
+                                                    for="teacher_id">{{ trans('cruds.lesson.fields.teacher') }}</label>
+                                                <select
+                                                    class="form-control select2 {{ $errors->has('teacher') ? 'is-invalid' : '' }}"
+                                                    name="teacher_id" id="teacher_id" required>
+                                                    @foreach ($teachers as $id => $teacher)
+                                                        <option value="{{ $id }}"
+                                                            {{ old('teacher_id') == $id ? 'selected' : '' }}>
+                                                            {{ $teacher }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @if ($errors->has('teacher'))
+                                                    <div class="invalid-feedback">
+                                                        {{ $errors->first('teacher') }}
+                                                    </div>
+                                                @endif
+                                                <span
+                                                    class="help-block">{{ trans('cruds.lesson.fields.teacher_helper') }}</span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="required"
+                                                    for="weekday_id">{{ trans('cruds.lesson.fields.weekday') }}</label>
+                                                <select
+                                                    class="form-control select2 {{ $errors->has('weekday') ? 'is-invalid' : '' }}"
+                                                    name="weekday_id" id="weekday_id" required>
+                                                    @foreach ($weekdays as $id => $weekday)
+                                                        <option value="{{ $id }}"
+                                                            {{ old(key: 'weekday_id') == $id ? 'selected' : '' }}>
+                                                            {{ $weekday }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @if ($errors->has('weekday'))
+                                                    <div class="invalid-feedback">
+                                                        {{ $errors->first('weekday') }}
+                                                    </div>
+                                                @endif
+                                                <span
+                                                    class="help-block">{{ trans('cruds.lesson.fields.weekday_helper') }}</span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="required"
+                                                    for="course_id">{{ trans('cruds.lesson.fields.course') }}</label>
+                                                <select
+                                                    class="form-control select2 {{ $errors->has('course') ? 'is-invalid' : '' }}"
+                                                    name="course_id" id="course_id" required>
+                                                    @foreach ($courses as $id => $course)
+                                                        <option value="{{ $id }}"
+                                                            {{ old('course_id') == $id ? 'selected' : '' }}>
+                                                            {{ $course }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @if ($errors->has('course'))
+                                                    <div class="invalid-feedback">
+                                                        {{ $errors->first('course') }}
+                                                    </div>
+                                                @endif
+                                                <span
+                                                    class="help-block">{{ trans('cruds.lesson.fields.course_helper') }}</span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="required"
+                                                    for="session_id">{{ trans('cruds.lesson.fields.session') }}</label>
+                                                <select
+                                                    class="form-control select2 {{ $errors->has('session_id') ? 'is-invalid' : '' }}"
+                                                    name="session_id" id="session_id" required>
+                                                    @foreach ($sessions as $id => $session)
+                                                        <option value="{{ $id }}"
+                                                            {{ old('session_id') == $id ? 'selected' : '' }}>
+                                                            {{ $session }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @if ($errors->has('session_id'))
+                                                    <div class="invalid-feedback">
+                                                        {{ $errors->first('session_id') }}
+                                                    </div>
+                                                @endif
+                                                <span
+                                                    class="help-block">{{ trans('cruds.lesson.fields.session_helper') }}</span>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="button" id="closeModalBtn"
+                                                    class="inline-flex justify-center px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 transition duration-150">
+                                                    Batal
+                                                </button>
+                                                <button
+                                                    class="inline-flex justify-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150">
+                                                    {{ trans('global.save') }}
+                                                </button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
