@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Course;
 use App\Http\Controllers\Controller;
 use App\Lesson;
 use App\Services\CalendarService;
@@ -28,6 +29,7 @@ class CalendarController extends Controller
         })->pluck('name', 'id');
 
         $lessons = Lesson::all();
+        $courses = Course::pluck('name', 'id');
 
         $sessions = [
             '1' => '08:00 - 08:50',
@@ -42,7 +44,7 @@ class CalendarController extends Controller
             '10' => '17:00 - 17:50',
         ];
 
-        return view('admin.calendar', compact('weekDays', 'calendarData', 'classes', 'teachers', 'lessons', 'sessions'));
+        return view('admin.calendar', compact('weekDays', 'calendarData', 'classes', 'teachers', 'lessons', 'sessions', 'courses'));
     }
 
     public function clearLessons()

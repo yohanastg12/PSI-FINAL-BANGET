@@ -22,6 +22,7 @@ class Lesson extends Model
         'weekday',
         'class_id',
         'teacher_id',
+        'course_id',
         'session_id',
     ];
 
@@ -35,11 +36,16 @@ class Lesson extends Model
         '7' => 'Sunday',
     ];
 
-    // // Relasi ke session
-    // public function session()
-    // {
-    //     return $this->belongsTo(Session::class, 'session_id');
-    // }
+    // Relasi ke session
+    public function session()
+    {
+        return $this->belongsTo(Session::class, 'session_id');
+    }
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class, 'course_id');
+    }
 
     function class()
     {

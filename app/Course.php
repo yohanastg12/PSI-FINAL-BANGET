@@ -2,14 +2,14 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Session extends Model
+class Course extends Model
 {
     use SoftDeletes;
 
-    public $table = 'sessions';
+    public $table = 'course';
 
     protected $dates = [
         'created_at',
@@ -18,8 +18,7 @@ class Session extends Model
     ];
 
     protected $fillable = [
-        'start_time',
-        'end_time'
+        'name'
     ];
 
     public function lessons()

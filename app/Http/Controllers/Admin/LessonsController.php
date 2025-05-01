@@ -27,10 +27,10 @@ class LessonsController extends Controller
     public function create()
     {
         abort_if(Gate::denies('lesson_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        
+
         $classes = SchoolClass::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $teachers = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        
+
         // Menambahkan sesi waktu
         $sessions = [
             '1' => '08:00 - 08:50',
@@ -54,14 +54,16 @@ class LessonsController extends Controller
             'weekday' => 'required',
             'session_id' => 'required',
             'class_id' => 'required',
+            'course_id' => 'required',
             'teacher_id' => 'required',
         ]);
-        
+
         // Simpan data lesson dengan session_id yang dipilih
         Lesson::create([
             'weekday' => $request->weekday,
             'class_id' => $request->class_id,
             'teacher_id' => $request->teacher_id,
+            'course_id' => $request->course_id,
             'session_id' => $request->session_id,  // Simpan ID sesi
         ]);
 
@@ -71,10 +73,10 @@ class LessonsController extends Controller
     public function edit(Lesson $lesson)
     {
         abort_if(Gate::denies('lesson_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        
+
         $classes = SchoolClass::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $teachers = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        
+
         // Menambahkan sesi waktu
         $sessions = [
             '1' => '08:00 - 08:50',
