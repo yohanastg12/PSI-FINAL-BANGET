@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Course;
 use App\Http\Controllers\Controller;
 use App\Lesson;
+use App\Session;
+use App\WeekDay;
 use App\Services\CalendarService;
 
 class CalendarController extends Controller
@@ -31,20 +33,16 @@ class CalendarController extends Controller
         $lessons = Lesson::all();
         $courses = Course::pluck('name', 'id');
 
-        $sessions = [
-            '1' => '08:00 - 08:50',
-            '2' => '09:00 - 09:50',
-            '3' => '10:00 - 10:50',
-            '4' => '11:00 - 11:50',
-            '5' => '12:00 - 12:50',
-            '6' => '13:00 - 13:50',
-            '7' => '14:00 - 14:50',
-            '8' => '15:00 - 15:50',
-            '9' => '16:00 - 16:50',
-            '10' => '17:00 - 17:50',
-        ];
+        $sessions = Session::orderBy('id')->get()->mapWithKeys(function ($session) {
+            return [
+                $session->id => \Carbon\Carbon::parse($session->start_time)->format('H:i') . ' - ' .
+                    \Carbon\Carbon::parse($session->end_time)->format('H:i')
+            ];
+        })->toArray();
 
-        return view('admin.calendar', compact('weekDays', 'calendarData', 'classes', 'teachers', 'lessons', 'sessions', 'courses'));
+        $weekdays = Weekday::orderBy('id')->pluck('name', 'id')->toArray();
+
+        return view('admin.calendar', compact('weekDays', 'calendarData', 'classes', 'teachers', 'lessons', 'sessions', 'courses', 'weekdays'));
     }
 
     public function clearLessons()

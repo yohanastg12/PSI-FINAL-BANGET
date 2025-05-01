@@ -19,7 +19,7 @@ class Lesson extends Model
 
     protected $fillable = [
         'name',
-        'weekday',
+        'weekday_id',
         'class_id',
         'teacher_id',
         'course_id',
@@ -40,6 +40,12 @@ class Lesson extends Model
     public function session()
     {
         return $this->belongsTo(Session::class, 'session_id');
+    }
+
+
+    public function weekday()
+    {
+        return $this->belongsTo(WeekDay::class, 'weekday_id');
     }
 
     public function course()

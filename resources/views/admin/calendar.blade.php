@@ -199,6 +199,26 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="required"
+                                                        for="weekday_id">{{ trans('cruds.lesson.fields.weekday') }}</label>
+                                                    <select
+                                                        class="form-control select2 {{ $errors->has('weekday') ? 'is-invalid' : '' }}"
+                                                        name="weekday_id" id="weekday_id" required>
+                                                        @foreach ($weekdays as $id => $weekday)
+                                                            <option value="{{ $id }}"
+                                                                {{ old(key: 'weekday_id') == $id ? 'selected' : '' }}>
+                                                                {{ $weekday }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @if ($errors->has('weekday'))
+                                                        <div class="invalid-feedback">
+                                                            {{ $errors->first('weekday') }}
+                                                        </div>
+                                                    @endif
+                                                    <span
+                                                        class="help-block">{{ trans('cruds.lesson.fields.teacher_helper') }}</span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="required"
                                                         for="course_id">{{ trans('cruds.lesson.fields.course') }}</label>
                                                     <select
                                                         class="form-control select2 {{ $errors->has('course') ? 'is-invalid' : '' }}"
@@ -216,21 +236,6 @@
                                                     @endif
                                                     <span
                                                         class="help-block">{{ trans('cruds.lesson.fields.teacher_helper') }}</span>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="required"
-                                                        for="weekday">{{ trans('cruds.lesson.fields.weekday') }}</label>
-                                                    <input
-                                                        class="form-control {{ $errors->has('weekday') ? 'is-invalid' : '' }}"
-                                                        type="number" name="weekday" id="weekday"
-                                                        value="{{ old('weekday') }}" step="1" required>
-                                                    @if ($errors->has('weekday'))
-                                                        <div class="invalid-feedback">
-                                                            {{ $errors->first('weekday') }}
-                                                        </div>
-                                                    @endif
-                                                    <span
-                                                        class="help-block">{{ trans('cruds.lesson.fields.weekday_helper') }}</span>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="required"

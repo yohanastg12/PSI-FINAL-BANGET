@@ -37,18 +37,18 @@ class CalendarService
         // Isi data pelajaran sesuai sesi dan hari
         foreach ($lessons as $lesson) {
             $sessionNumber = $lesson->session_id;
-        
-            if ($sessionNumber && isset($calendarData[$sessionNumber][$lesson->weekday])) {
+
+            if ($sessionNumber && isset($calendarData[$sessionNumber][$lesson->weekday_id])) {
                 [$startTime, $endTime] = $sesiWaktu[$sessionNumber];
-        
-                $calendarData[$sessionNumber][$lesson->weekday] = [
-                    'class_name'   => $lesson->class->name ?? '-',
+
+                $calendarData[$sessionNumber][$lesson->weekday_id] = [
+                    'class_name' => $lesson->class->name ?? '-',
                     'teacher_name' => $lesson->teacher->name ?? '-',
-                    'start_time'   => $startTime,
-                    'end_time'     => $endTime,
+                    'start_time' => $startTime,
+                    'end_time' => $endTime,
                 ];
             }
         }
-                return $calendarData;
+        return $calendarData;
     }
 }
