@@ -202,7 +202,7 @@
                                                         </div>
                                                     @endif
                                                     <span
-                                                        class="help-block">{{ trans('cruds.lesson.fields.teacher_helper') }}</span>
+                                                        class="help-block">{{ trans('cruds.lesson.fields.weekday_helper') }}</span>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="required"
@@ -222,7 +222,7 @@
                                                         </div>
                                                     @endif
                                                     <span
-                                                        class="help-block">{{ trans('cruds.lesson.fields.teacher_helper') }}</span>
+                                                        class="help-block">{{ trans('cruds.lesson.fields.course_helper') }}</span>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="required"
