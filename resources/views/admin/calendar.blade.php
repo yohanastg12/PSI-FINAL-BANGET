@@ -94,20 +94,7 @@
                                 </thead>
 
                                 <tbody>
-                                    @php
-                                        $sesiWaktu = [
-                                            1 => '08:00 - 08:50',
-                                            2 => '09:00 - 09:50',
-                                            3 => '10:00 - 10:50',
-                                            4 => '11:00 - 11:50',
-                                            5 => '13:00 - 13:50',
-                                            6 => '14:00 - 14:50',
-                                            7 => '15:00 - 15:50',
-                                            8 => '16:00 - 16:50',
-                                        ];
-                                    @endphp
-
-                                    @foreach ($sesiWaktu as $sesi => $waktu)
+                                    @foreach ($sessions as $sesi => $waktu)
                                         <tr>
                                             <td>Sesi {{ $sesi }}<br><small>{{ $waktu }}</small></td>
                                             @for ($dayIndex = 0; $dayIndex < 7; $dayIndex++)

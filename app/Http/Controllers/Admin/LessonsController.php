@@ -8,6 +8,7 @@ use App\Http\Requests\StoreLessonRequest;
 use App\Http\Requests\UpdateLessonRequest;
 use App\Lesson;
 use App\SchoolClass;
+use App\Session;
 use App\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
@@ -32,18 +33,12 @@ class LessonsController extends Controller
         $teachers = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         // Menambahkan sesi waktu
-        $sessions = [
-            '1' => '08:00 - 08:50',
-            '2' => '09:00 - 09:50',
-            '3' => '10:00 - 10:50',
-            '4' => '11:00 - 11:50',
-            '5' => '12:00 - 12:50',
-            '6' => '13:00 - 13:50',
-            '7' => '14:00 - 14:50',
-            '8' => '15:00 - 15:50',
-            '9' => '16:00 - 16:50',
-            '10' => '17:00 - 17:50',
-        ];
+        $sessions = Session::orderBy('id')->get()->mapWithKeys(function ($session) {
+            return [
+                $session->id => \Carbon\Carbon::parse($session->start_time)->format('H:i') . ' - ' .
+                    \Carbon\Carbon::parse($session->end_time)->format('H:i')
+            ];
+        })->toArray();
 
         return view('admin.lessons.create', compact('classes', 'teachers', 'sessions'));
     }
@@ -78,17 +73,12 @@ class LessonsController extends Controller
         $teachers = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         // Menambahkan sesi waktu
-        $sessions = [
-            '1' => '08:00 - 08:50',
-            '2' => '09:00 - 09:50',
-            '3' => '10:00 - 10:50',
-            '4' => '11:00 - 11:50',
-            '5' => '13:00 - 13:50',
-            '6' => '14:00 - 14:50',
-            '7' => '15:00 - 15:50',
-            '8' => '16:00 - 16:50',
-
-        ];
+        $sessions = Session::orderBy('id')->get()->mapWithKeys(function ($session) {
+            return [
+                $session->id => \Carbon\Carbon::parse($session->start_time)->format('H:i') . ' - ' .
+                    \Carbon\Carbon::parse($session->end_time)->format('H:i')
+            ];
+        })->toArray();
 
         return view('admin.lessons.edit', compact('classes', 'teachers', 'lesson', 'sessions'));
     }

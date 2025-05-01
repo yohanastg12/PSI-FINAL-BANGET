@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Lesson;
+use App\Session;
 
 class CalendarService
 {
@@ -11,16 +12,12 @@ class CalendarService
         $calendarData = [];
 
         // Daftar waktu sesi tetap
-        $sesiWaktu = [
-            1 => ['08:00', '08:50'],
-            2 => ['09:00', '09:50'],
-            3 => ['10:00', '10:50'],
-            4 => ['11:00', '11:50'],
-            5 => ['13:00', '13:50'],
-            6 => ['14:00', '14:50'],
-            7 => ['15:00', '15:50'],
-            8 => ['16:00', '16:50'],
-        ];
+        $sesiWaktu = Session::orderBy('id')->get()->mapWithKeys(function ($session) {
+            return [
+                $session->id => \Carbon\Carbon::parse($session->start_time)->format('H:i') . ' - ' .
+                    \Carbon\Carbon::parse($session->end_time)->format('H:i')
+            ];
+        })->toArray();
 
         // Ambil semua lesson dengan relasi yang diperlukan
         $lessons = Lesson::with(['class', 'teacher'])
