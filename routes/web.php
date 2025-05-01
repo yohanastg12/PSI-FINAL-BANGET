@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\LessonsController;
 use App\Http\Controllers\Admin\PreferenceController;
 use App\Http\Controllers\Admin\CalendarController;
 use App\Http\Controllers\Admin\TicketController;
+use App\Http\Controllers\baa\BAAController;
 use App\Http\Controllers\Student\HomeController as StudentHomeController;
 
 // Redirect ke login jika belum login
@@ -13,13 +14,14 @@ Route::redirect('/', '/login');
 
 // Redirect setelah login
 Route::get('/home', function () {
-    $routeName = auth()->user() && (auth()->user()->is_student || auth()->user()->is_teacher) ? 'admin.calendar.index' : 'admin.home';
-    if (session('status')) {
-        return redirect()->route($routeName)->with('status', session('status'));
-    }
+    $user = auth()->user();
+    $routeName = $user && ($user->is_student || $user->is_teacher)
+        ? 'admin.calendar.index'
+        : ($user->is_baa ? 'baa.dashboard' : 'admin.home');
 
-    return redirect()->route($routeName);
+    return redirect()->route($routeName)->with('status', session('status'));
 });
+
 
 // Nonaktifkan register
 Auth::routes(['register' => false]);
@@ -71,5 +73,13 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/student/ticketing', [TicketController::class, 'index'])->name('student.ticketing.index');
 Route::post('/student/ticketing', [TicketController::class, 'store'])->name('student.ticket.store');
 
+
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/baa/dashboard', [BAAController::class, 'index'])->name('baa.dashboard');
+    Route::get('/baa/tickets', [BAAController::class, 'tickets'])->name('baa.tickets');
+    Route::post('/baa/tickets/{id}/approve', [BAAController::class, 'approve'])->name('baa.tickets.approve');
+    Route::post('/baa/tickets/{id}/reject', [BAAController::class, 'reject'])->name('baa.tickets.reject');
 
 });

@@ -44,6 +44,11 @@ class User extends Authenticatable
     public function getIsAdminAttribute()
     {
         return $this->roles()->where('id', 1)->exists();
+        
+    }
+    public function getIsBaaAttribute()
+    {
+        return $this->roles()->where('id', 2)->exists();
     }
 
     public function getIsTeacherAttribute()

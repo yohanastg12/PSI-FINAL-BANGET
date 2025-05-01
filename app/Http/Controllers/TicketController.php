@@ -27,4 +27,5 @@ class TicketController extends Controller
 
         return redirect()->route('student.ticketing.index');
     }
+    
 }
