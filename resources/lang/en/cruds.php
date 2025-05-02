@@ -113,4 +113,20 @@ return [
             'deleted_at_helper' => '',
         ],
     ],
+    'course' => [
+        'title' => 'Course',
+        'title_singular' => 'Course',
+        'fields' => [
+            'id' => 'ID',
+            'id_helper' => '',
+            'name' => 'Name',
+            'name_helper' => '',
+            'created_at' => 'Created at',
+            'created_at_helper' => '',
+            'updated_at' => 'Updated at',
+            'updated_at_helper' => '',
+            'deleted_at' => 'Deleted at',
+            'deleted_at_helper' => '',
+        ],
+    ],
 ];

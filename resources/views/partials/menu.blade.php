@@ -65,6 +65,15 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('course_access')
+                            <li class="nav-item">
+                                <a href="{{ route('admin.course.index') }}"
+                                    class="nav-link {{ request()->is('admin/course') || request()->is('admin/course/*') ? 'active' : '' }}">
+                                    <i class="fa-fw fas fa-book nav-icon"></i>
+                                    {{ trans('cruds.course.title') }}
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
                 </li>
             @endcan
