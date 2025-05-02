@@ -58,7 +58,7 @@ class Lesson extends Model
         return $this->belongsTo(Course::class, 'course_id');
     }
 
-    function class()
+    public function class()
     {
         return $this->belongsTo(SchoolClass::class, 'class_id');
     }

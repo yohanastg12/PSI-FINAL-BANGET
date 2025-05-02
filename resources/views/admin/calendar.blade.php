@@ -39,7 +39,22 @@
                             <div>
                                 <label for="classSelect" class="block text-gray-700 font-bold mb-2">Filter by Study
                                     Program</label>
-                                <select name="class" id="classSelect"
+                                <select
+                                    class="block w-full bg-white border border-gray-300 rounded-md py-2 px-3 shadow-sm{{ $errors->has('studyProgram') ? 'is-invalid' : '' }}"
+                                    name="study_program_id" id="class_id" required>
+                                    @foreach ($studyPrograms as $id => $studyProgram)
+                                        <option value="{{ $id }}"
+                                            {{ old('study_program_id') == $id ? 'selected' : '' }}>
+                                            {{ $studyProgram }}</option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('studyProgram'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('studyProgram') }}
+                                    </div>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.lesson.fields.class_helper') }}</span>
+                                {{-- <select name="class" id="classSelect"
                                     class="block w-full bg-white border border-gray-300 rounded-md py-2 px-3 shadow-sm">
                                     <option value="">Select Study Program</option>
                                     <option value="Sistem Informasi">Sistem Informasi</option>
@@ -52,7 +67,7 @@
                                     <option value="Bioproses">Bioproses</option>
                                     <option value="Manajemen Rekayasa">Manajemen Rekayasa</option>
                                     <option value="Metalurgi">Metalurgi</option>
-                                </select>
+                                </select> --}}
                             </div>
                             <div>
                                 <label for="yearSelect" class="block text-gray-700 font-bold mb-2">Filter by Year</label>
