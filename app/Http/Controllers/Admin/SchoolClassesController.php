@@ -7,7 +7,7 @@ use App\Http\Requests\MassDestroySchoolClassRequest;
 use App\Http\Requests\StoreSchoolClassRequest;
 use App\Http\Requests\UpdateSchoolClassRequest;
 use App\SchoolClass;
-use Gate;
+use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class SchoolClassesController extends Controller

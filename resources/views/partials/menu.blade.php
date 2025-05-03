@@ -83,6 +83,15 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('study_program_access')
+                            <li class="nav-item">
+                                <a href="{{ route('admin.study-program.index') }}"
+                                    class="nav-link {{ request()->is('admin/study-program') || request()->is('admin/study-program/*') ? 'active' : '' }}">
+                                    <i class="fa-fw fas fa-book nav-icon"></i>
+                                    {{ trans('cruds.studyProgram.title') }}
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
                 </li>
             @endcan
