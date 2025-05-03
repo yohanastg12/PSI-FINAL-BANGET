@@ -14,7 +14,7 @@ class TicketController extends Controller
     public function index()
     {
         $tickets = session('tickets', []); 
-        return view('student.Preference.ticketing', compact('tickets'));
+        return view('ticketing', compact('tickets'));
     }
 
     public function store(Request $request)

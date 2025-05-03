@@ -48,7 +48,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('lessons/destroy', 'LessonsController@massDestroy')->name('lessons.massDestroy');
     Route::resource('lessons', 'LessonsController');
     Route::post('/lessons/store', 'LessonsController@store')->name('lessons.store');
-    Route::post('/admin/lessons/store', [LessonsController::class, 'store'])->name('admin.lessons.store');
+    Route::post('/lessons/store', [LessonsController::class, 'store'])->name('admin.lessons.store');
 
     // School Classes
     Route::delete('school-classes/destroy', 'SchoolClassesController@massDestroy')->name('school-classes.massDestroy');
@@ -80,7 +80,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Ticketing Student
 
-    Route::get('/student/ticketing', [TicketController::class, 'index'])->name('student.ticketing.index');
+    Route::get('/ticketing', [TicketController::class, 'index'])->name('student.ticketing.index');
     Route::post('/student/ticketing', [TicketController::class, 'store'])->name('student.ticket.store');
 
 

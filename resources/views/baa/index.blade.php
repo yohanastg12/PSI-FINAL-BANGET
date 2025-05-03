@@ -20,7 +20,10 @@
                         <th>Description</th>
                         <th>Role</th>
                         <th>Submitted At</th>
+                        @can("ticketing_approval")
                         <th>Action</th>
+                        @endcan
+
                     </tr>
                 </thead>
                 <tbody>
@@ -30,6 +33,7 @@
                             <td>{{ $ticket->description }}</td>
                             <td>{{ $ticket->role }}</td>
                             <td>{{ $ticket->created_at->format('d M Y') }}</td>
+                            @can("ticketing_approval")
                             <td>
                                 <form action="{{ route('baa.tickets.approve', $ticket->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to approve this ticket?');">
                                     @csrf
@@ -40,6 +44,7 @@
                                     <button class="btn btn-xs btn-danger">Reject</button>
                                 </form>
                             </td>   
+                            @endcan
                         </tr>
                     @empty
                         <tr>
