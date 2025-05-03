@@ -163,7 +163,21 @@
                                                     </div>
                                                 @endif
                                                 <span
-                                                    class="help-block">{{ trans('cruds.lesson.fields.class_helper') }}</span>
+                                                    class="help-block">{{ trans('cruds.lesson.fields.study_program_helper') }}</span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="required"
+                                                    for="year">{{ trans('cruds.lesson.fields.year') }}</label>
+                                                <input name="year" id="year"
+                                                    class="form-control {{ $errors->has('year') ? 'is-invalid' : '' }}"
+                                                    type="number" />
+                                                @if ($errors->has('year'))
+                                                    <div class="invalid-feedback">
+                                                        {{ $errors->first('year') }}
+                                                    </div>
+                                                @endif
+                                                <span
+                                                    class="help-block">{{ trans('cruds.lesson.fields.year_helper') }}</span>
                                             </div>
                                             <div class="form-group">
                                                 <label class="required"

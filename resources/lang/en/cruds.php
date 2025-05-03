@@ -95,6 +95,8 @@ return [
             'deleted_at_helper' => '',
             'class' => 'Class',
             'class_helper' => '',
+            'year' => 'Year',
+            'year_helper' => '',
         ],
     ],
     'schoolClass' => [
