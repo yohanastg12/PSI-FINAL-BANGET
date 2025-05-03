@@ -54,6 +54,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('school-classes/destroy', 'SchoolClassesController@massDestroy')->name('school-classes.massDestroy');
     Route::resource('school-classes', 'SchoolClassesController');
 
+    // Study Program
+    Route::get('study-program', 'StudyProgramController@index')->name('study-program.index');
+    Route::delete('study-program/destroy', 'StudyProgramController@massDestroy')->name('study-program.massDestroy');
+    Route::resource('study-program', 'StudyProgramController');
+
+    // Course
+    Route::get('course', 'CourseController@index')->name('course.index');
+    Route::delete('course/destroy', 'CourseController@massDestroy')->name('course.massDestroy');
+    Route::resource('course', 'CourseController');
+
     // Calendar
     Route::get('calendar', 'CalendarController@index')->name('calendar.index');
     Route::get('/calendar/lesson/{day}/{time}', [LessonsController::class, 'show'])->name('admin.calendar.show');
@@ -68,10 +78,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/student/home', [StudentHomeController::class, 'index'])->name('student.home');
 
 
-// Ticketing Student
+    // Ticketing Student
 
-Route::get('/student/ticketing', [TicketController::class, 'index'])->name('student.ticketing.index');
-Route::post('/student/ticketing', [TicketController::class, 'store'])->name('student.ticket.store');
+    Route::get('/student/ticketing', [TicketController::class, 'index'])->name('student.ticketing.index');
+    Route::post('/student/ticketing', [TicketController::class, 'store'])->name('student.ticket.store');
 
 
 });
