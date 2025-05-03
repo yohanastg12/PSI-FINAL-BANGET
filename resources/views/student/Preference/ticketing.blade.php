@@ -16,7 +16,7 @@ $user = Auth::user();
     <!-- Judul -->
     <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Create Ticket</h2>
 
-    <form action="{{ route('student.ticket.add') }}" method="POST">
+    <form action="{{ route('student.ticket.store') }}" method="POST">
       @csrf
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- Name -->

@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\LessonsController;
+use App\Http\Controllers\Admin\PreferenceController;
 use App\Http\Controllers\Admin\CalendarController;
-use App\Http\Controllers\TicketController;
+use App\Http\Controllers\Admin\TicketController;
 use App\Http\Controllers\baa\BAAController;
 use App\Http\Controllers\Student\HomeController as StudentHomeController;
 
@@ -57,16 +58,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('calendar', 'CalendarController@index')->name('calendar.index');
     Route::get('/calendar/lesson/{day}/{time}', [LessonsController::class, 'show'])->name('admin.calendar.show');
     Route::delete('/calendar/clear-lessons', [CalendarController::class, 'clearLessons'])->name('calendar.clear-lessons');
-
-    // Course
-    Route::get('course', 'CourseController@index')->name('course.index');
-    Route::delete('course/destroy', 'CourseController@massDestroy')->name('course.massDestroy');
-    Route::resource('course', 'CourseController');
-
-    // Study Program
-    Route::get('study-program', 'StudyProgramController@index')->name('study-program.index');
-    Route::delete('study-program/destroy', 'StudyProgramController@massDestroy')->name('study-program.massDestroy');
-    Route::resource('study-program', 'StudyProgramController');
 });
 
 
@@ -77,12 +68,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/student/home', [StudentHomeController::class, 'index'])->name('student.home');
 
 
-    // Ticketing Student
+// Ticketing Student
 
-    Route::get('/student/ticketing', [TicketController::class, 'index'])->name('student.ticketing.index');
-    Route::post('/student/ticketing', [TicketController::class, 'store'])->name('student.ticket.store');
-    Route::post('/student/ticketing', [TicketController::class, 'add'])->name('student.ticket.add');
-
+Route::get('/student/ticketing', [TicketController::class, 'index'])->name('student.ticketing.index');
+Route::post('/student/ticketing', [TicketController::class, 'store'])->name('student.ticket.store');
 
 
 });

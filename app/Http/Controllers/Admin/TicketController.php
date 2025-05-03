@@ -3,28 +3,34 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Ticket;
 use App\Http\Controllers\Controller;
+use App\Ticket;
+
+
+
 
 class TicketController extends Controller
 {
     public function index()
     {
-        return view('student.Preference.ticketing');
+        $tickets = session('tickets', []); 
+        return view('student.Preference.ticketing', compact('tickets'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => 'required|string|max:1000',
+            'role' => 'required|string|max:100'
         ]);
 
-        Ticket::create([
-            'name' => $request->name,
-            'description' => $request->description,
-        ]);
+        Ticket::create($data);
 
-        return redirect()->route('student.ticketing.index')->with('success', 'Ticket created successfully!');
+        return redirect()->route('baa.dashboard')->with('success', 'Ticket berhasil disimpan.');
     }
+
+    
+    
+    
 }
