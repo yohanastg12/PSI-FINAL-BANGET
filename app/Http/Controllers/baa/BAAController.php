@@ -9,7 +9,9 @@ class BAAController extends Controller
 {
     public function index()
     {
-        return view('baa.dashboard');
+        $tickets = Ticket::where('status', 'pending')->get();
+        return view('baa.index', compact('tickets'));
+
     }
 
     public function tickets()
@@ -28,13 +30,5 @@ class BAAController extends Controller
         return redirect()->back()->with('success', 'Ticket approved successfully.');
     }
 
-    public function reject($id)
-{
-    $ticket = Ticket::findOrFail($id);
-    $ticket->status = 'rejected'; // pastikan field ini sesuai
-    $ticket->save();
-
-    return redirect()->back()->with('success', 'Ticket rejected successfully.');
-}
-
+    
 }

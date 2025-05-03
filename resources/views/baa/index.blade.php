@@ -1,9 +1,10 @@
-@extends('layouts.admin')
+@extends('layouts.baa')
 
 @section('content')
 <div class="card">
+
     <div class="card-header">
-        Pending Tickets
+        Pending Tickets -  {{ auth()->user()->name }}
     </div>
 
     <div class="card-body">
@@ -17,6 +18,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Description</th>
+                        <th>Role</th>
                         <th>Submitted At</th>
                         <th>Action</th>
                     </tr>
@@ -26,6 +28,7 @@
                         <tr>
                             <td>{{ $ticket->name }}</td>
                             <td>{{ $ticket->description }}</td>
+                            <td>{{ $ticket->role }}</td>
                             <td>{{ $ticket->created_at->format('d M Y') }}</td>
                             <td>
                                 <form action="{{ route('baa.tickets.approve', $ticket->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to approve this ticket?');">
