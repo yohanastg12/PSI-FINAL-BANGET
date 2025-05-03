@@ -16,16 +16,19 @@ class TicketController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|string',
-            'role' => 'required|string',
             'description' => 'required|string',
+            // Hapus validasi 'role' karena akan kita isi sendiri
         ]);
-
-        // Simpan ke session sementara (karena kamu belum pakai database)
+    
+        // Tambahkan role dari user yang login
+        $data['role'] = auth()->user()->role;
+    
+        // Simpan ke session sementara
         $tickets = session('tickets', []);
         $tickets[] = $data;
         session(['tickets' => $tickets]);
-
-        return redirect()->route('student.ticketing.index');
+    
+        return redirect()->route('student.ticketing.index')->with('success', 'Ticket berhasil disimpan.');
     }
     
 }
