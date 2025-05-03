@@ -1,34 +1,55 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
 
 class TicketController extends Controller
 {
-    // Data ditampilkan di halaman home
     public function index()
     {
-        $tickets = session('tickets', []); // Ambil dari session sementara
+        $tickets = session('tickets', []); 
         return view('student.Preference.ticketing', compact('tickets'));
     }
 
-    // Simpan data dari form
     public function store(Request $request)
     {
+        dd($request);
         $data = $request->validate([
-            'name' => 'required|string',
-            'description' => 'required|string',
-            // Hapus validasi 'role' karena akan kita isi sendiri
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:1000',
+            'role' => 'required|string|max:100'
         ]);
     
-        // Tambahkan role dari user yang login
-        $data['role'] = auth()->user()->role;
     
-        // Simpan ke session sementara
+        // Simpan ke session
         $tickets = session('tickets', []);
         $tickets[] = $data;
         session(['tickets' => $tickets]);
     
-        return redirect()->route('student.ticketing.index')->with('success', 'Ticket berhasil disimpan.');
+        return redirect()->route('baa.dashboard')->with('success', 'Ticket berhasil disimpan.');
+
     }
+
+    public function add(Request $request)
+    {
+        dd($request);
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:1000',
+            'role' => 'required|string|max:100'
+        ]);
+    
+    
+        // Simpan ke session
+        $tickets = session('tickets', []);
+        $tickets[] = $data;
+        session(['tickets' => $tickets]);
+    
+        return redirect()->route('baa.dashboard')->with('success', 'Ticket berhasil disimpan.');
+
+    }
+    
+    
     
 }

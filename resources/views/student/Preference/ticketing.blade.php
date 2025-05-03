@@ -1,3 +1,9 @@
+
+<?php
+$user = Auth::user();
+    $roleName = $user->roles->pluck('title')->first() ?? 'Unknown';
+    ?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -10,7 +16,7 @@
     <!-- Judul -->
     <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Create Ticket</h2>
 
-    <form action="{{ route('student.ticket.store') }}" method="POST">
+    <form action="{{ route('student.ticket.add') }}" method="POST">
       @csrf
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- Name -->
@@ -19,13 +25,9 @@
           <input class="w-full border border-gray-300 rounded-lg p-2 text-base focus:ring-2 focus:ring-blue-300 focus:border-blue-500 transition" 
                  id="name" name="name" type="text" required/>
         </div>
-
-        <!-- Role -->
-        @php
-    $user = Auth::user();
-    $roleName = $user->role->title ?? 'Unknown'; 
-@endphp
-
+<?php
+// dd($roleName)
+?>
 <!-- Role -->
 <div>
   <label class="block text-gray-800 text-base mb-1" for="role">Role</label>
@@ -39,7 +41,7 @@
   >
   <input type="hidden" name="role" value="{{ $roleName }}">
 </div>
-
+ 
       </div>
 
       <!-- Description Full Width -->

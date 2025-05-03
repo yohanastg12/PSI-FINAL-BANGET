@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\LessonsController;
 use App\Http\Controllers\Admin\CalendarController;
-use App\Http\Controllers\Admin\TicketController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\baa\BAAController;
 use App\Http\Controllers\Student\HomeController as StudentHomeController;
 
@@ -81,6 +81,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/student/ticketing', [TicketController::class, 'index'])->name('student.ticketing.index');
     Route::post('/student/ticketing', [TicketController::class, 'store'])->name('student.ticket.store');
+    Route::post('/student/ticketing', [TicketController::class, 'add'])->name('student.ticket.add');
+
 
 
 });
