@@ -21,15 +21,25 @@
         </div>
 
         <!-- Role -->
-        <div>
-          <label class="block text-gray-800 text-base mb-1" for="role">Role</label>
-          <select class="w-full border border-gray-300 rounded-lg p-2 text-base focus:ring-2 focus:ring-blue-300 focus:border-blue-500 transition" 
-                  id="role" name="role" required>
-            <option value="" disabled selected>Pilih Role</option>
-            <option value="dosen">Lecturer</option>
-            <option value="mahasiswa">Students</option>
-          </select>
-        </div>
+        @php
+    $user = Auth::user();
+    $roleName = $user->role->title ?? 'Unknown'; 
+@endphp
+
+<!-- Role -->
+<div>
+  <label class="block text-gray-800 text-base mb-1" for="role">Role</label>
+  <input 
+    class="w-full border border-gray-300 rounded-lg p-2 text-base bg-gray-100 text-gray-700" 
+    id="role" 
+    name="role_display" 
+    type="text" 
+    value="{{ $roleName }}" 
+    readonly
+  >
+  <input type="hidden" name="role" value="{{ $roleName }}">
+</div>
+
       </div>
 
       <!-- Description Full Width -->
