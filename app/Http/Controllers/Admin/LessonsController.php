@@ -52,6 +52,7 @@ class LessonsController extends Controller
             'class_id' => 'required',
             'course_id' => 'required',
             'teacher_id' => 'required',
+            'year' => 'required',
         ]);
 
         // Simpan data lesson dengan session_id yang dipilih
@@ -61,7 +62,8 @@ class LessonsController extends Controller
             'class_id' => $request->class_id,
             'teacher_id' => $request->teacher_id,
             'course_id' => $request->course_id,
-            'session_id' => $request->session_id,  // Simpan ID sesi
+            'session_id' => $request->session_id,
+            'year' => $request->year,
         ]);
 
         return redirect()->route('admin.calendar.index')->with('success', 'Lesson added successfully.');
