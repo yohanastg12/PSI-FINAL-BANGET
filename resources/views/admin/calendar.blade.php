@@ -36,35 +36,40 @@
 
                     <form method="GET" action="">
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                            {{-- Study Program Filter --}}
                             <div>
-                                <label for="classSelect" class="block text-gray-700 font-bold mb-2">Filter by Study
+                                <label for="studyProgramSelect" class="block text-gray-700 font-bold mb-2">Filter by Study
                                     Program</label>
-                                <select
-                                    class="block w-full bg-white border border-gray-300 rounded-md py-2 px-3 shadow-sm{{ $errors->has('studyProgram') ? 'is-invalid' : '' }}"
-                                    name="study_program_id" id="class_id" required>
+                                <select class="block w-full bg-white border border-gray-300 rounded-md py-2 px-3 shadow-sm"
+                                    name="study_program_id" id="studyProgramSelect">
+                                    <option value="">-- All Study Programs --</option>
                                     @foreach ($studyPrograms as $id => $studyProgram)
                                         <option value="{{ $id }}"
-                                            {{ old('study_program_id') == $id ? 'selected' : '' }}>
-                                            {{ $studyProgram }}</option>
+                                            {{ request('study_program_id') == $id ? 'selected' : '' }}>
+                                            {{ $studyProgram }}
+                                        </option>
                                     @endforeach
                                 </select>
-                                @if ($errors->has('studyProgram'))
-                                    <div class="invalid-feedback">
-                                        {{ $errors->first('studyProgram') }}
-                                    </div>
-                                @endif
-                                <span class="help-block">{{ trans('cruds.lesson.fields.class_helper') }}</span>
+                                <span class="help-block">{{ trans('cruds.lesson.fields.study_program_helper') }}</span>
                             </div>
+                            {{-- Year Filter --}}
                             <div>
                                 <label for="yearSelect" class="block text-gray-700 font-bold mb-2">Filter by Year</label>
                                 <select name="year" id="yearSelect"
                                     class="block w-full bg-white border border-gray-300 rounded-md py-2 px-3 shadow-sm">
-                                    <option value="">Select Year</option>
-                                    <option value="2019">2019</option>
-                                    <option value="2024">2024</option>
-                                    <option value="2025">2025</option>
+                                    <option value="" {{ request('year') == '' ? 'selected' : '' }}>-- All Year --
+                                    </option>
+                                    @foreach ($years as $year)
+                                        <option value="{{ $year }}"
+                                            {{ request('year') == $year ? 'selected' : '' }}>
+                                            {{ $year }}
+                                        </option>
+                                    @endforeach
                                 </select>
+                                <span
+                                    class="help-block text-sm text-gray-500">{{ trans('cruds.lesson.fields.year_helper') }}</span>
                             </div>
+
                             <div class="flex items-end">
                                 <button type="submit"
                                     class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition duration-200">
