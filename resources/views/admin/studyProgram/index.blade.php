@@ -1,32 +1,32 @@
 @extends('layouts.admin')
 @section('content')
-    @can('permission_create')
+    @can('study_program_create')
         <div style="margin-bottom: 10px;" class="row">
             <div class="col-lg-12">
-                <a class="btn btn-success" href="{{ route('admin.permissions.create') }}">
-                    {{ trans('global.add') }} {{ trans('cruds.permission.title_singular') }}
+                <a class="btn btn-success" href="{{ route('admin.study-program.create') }}">
+                    {{ trans('global.add') }} {{ trans('cruds.studyProgram.title_singular') }}
                 </a>
             </div>
         </div>
     @endcan
     <div class="card">
         <div class="card-header">
-            {{ trans('cruds.permission.title_singular') }} {{ trans('global.list') }}
+            {{ trans('cruds.studyProgram.title_singular') }} {{ trans('global.list') }}
         </div>
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class=" table table-bordered table-striped table-hover datatable datatable-Permission">
+                <table class=" table table-bordered table-striped table-hover datatable datatable-studyProgram">
                     <thead>
                         <tr>
                             <th width="10">
 
                             </th>
                             <th>
-                                {{ trans('cruds.permission.fields.id') }}
+                                {{ trans('cruds.studyProgram.fields.id') }}
                             </th>
                             <th>
-                                {{ trans('cruds.permission.fields.title') }}
+                                {{ trans('cruds.studyProgram.fields.name') }}
                             </th>
                             <th>
                                 &nbsp;
@@ -34,35 +34,35 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($permissions as $key => $permission)
-                            <tr data-entry-id="{{ $permission->id }}">
+                        @foreach ($studyPrograms as $key => $studyProgram)
+                            <tr data-entry-id="{{ $studyProgram->id }}">
                                 <td>
 
                                 </td>
                                 <td>
-                                    {{ $permission->id ?? '' }}
+                                    {{ $studyProgram->id ?? '' }}
                                 </td>
                                 <td>
-                                    {{ $permission->title ?? '' }}
+                                    {{ $studyProgram->name ?? '' }}
                                 </td>
                                 <td>
-                                    @can('permission_show')
+                                    @can('study_program_show')
                                         <a class="btn btn-xs btn-primary"
-                                            href="{{ route('admin.permissions.show', $permission->id) }}">
+                                            href="{{ route('admin.study-program.show', $studyProgram->id) }}">
                                             {{ trans('global.view') }}
                                         </a>
                                     @endcan
 
-                                    @can('permission_edit')
+                                    @can('study_program_edit')
                                         <a class="btn btn-xs btn-info"
-                                            href="{{ route('admin.permissions.edit', $permission->id) }}">
+                                            href="{{ route('admin.study-program.edit', $studyProgram->id) }}">
                                             {{ trans('global.edit') }}
                                         </a>
                                     @endcan
 
-                                    @can('permission_delete')
-                                        <form action="{{ route('admin.permissions.destroy', $permission->id) }}" method="POST"
-                                            onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
+                                    @can('study_program_delete')
+                                        <form action="{{ route('admin.study-program.destroy', $studyProgram->id) }}"
+                                            method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
                                             style="display: inline-block;">
                                             <input type="hidden" name="_method" value="DELETE">
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -86,11 +86,11 @@
     <script>
         $(function() {
             let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-            @can('permission_delete')
+            @can('study_program_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
                 let deleteButton = {
                     text: deleteButtonTrans,
-                    url: "{{ route('admin.permissions.massDestroy') }}",
+                    url: "{{ route('admin.study-program.massDestroy') }}",
                     className: 'btn-danger',
                     action: function(e, dt, node, config) {
                         var ids = $.map(dt.rows({
@@ -132,7 +132,7 @@
                 ],
                 pageLength: 100,
             });
-            $('.datatable-Permission:not(.ajaxTable)').DataTable({
+            $('.datatable-studyProgram:not(.ajaxTable)').DataTable({
                 buttons: dtButtons
             })
             $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {

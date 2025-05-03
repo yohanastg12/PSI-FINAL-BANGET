@@ -62,6 +62,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('course', 'CourseController@index')->name('course.index');
     Route::delete('course/destroy', 'CourseController@massDestroy')->name('course.massDestroy');
     Route::resource('course', 'CourseController');
+
+    // Study Program
+    Route::get('study-program', 'StudyProgramController@index')->name('study-program.index');
+    Route::delete('study-program/destroy', 'StudyProgramController@massDestroy')->name('study-program.massDestroy');
+    Route::resource('study-program', 'StudyProgramController');
 });
 
 
