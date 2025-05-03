@@ -103,11 +103,10 @@
                                                 @foreach ($weekdays as $weekdayId => $weekday)
                                                     <td>
                                                         @if (isset($calendar[$sessionId][$weekdayId]))
-                                                            {{-- {{ dd($calendar[$sessionId][$weekdayId]) }} --}}
                                                             @foreach ($calendar[$sessionId][$weekdayId] as $lesson)
                                                                 <div>
                                                                     {{ $lesson->study_program_name }} -
-                                                                    {{ $lesson->course_name }} -
+                                                                    {{ $lesson->year }} -
                                                                     {{ $lesson->class_name }} -
                                                                     {{ $lesson->teacher_name }} -
                                                                     {{ $lesson->course_name }}
