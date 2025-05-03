@@ -54,20 +54,6 @@
                                     </div>
                                 @endif
                                 <span class="help-block">{{ trans('cruds.lesson.fields.class_helper') }}</span>
-                                {{-- <select name="class" id="classSelect"
-                                    class="block w-full bg-white border border-gray-300 rounded-md py-2 px-3 shadow-sm">
-                                    <option value="">Select Study Program</option>
-                                    <option value="Sistem Informasi">Sistem Informasi</option>
-                                    <option value="Elektro">Elektro</option>
-                                    <option value="Informatika">Informatika</option>
-                                    <option value="Teknologi Informasi">Teknologi Informasi</option>
-                                    <option value="Teknologi Komputer">Teknologi Komputer</option>
-                                    <option value="Teknologi Rekayasa Perangkat Lunak">Teknologi Rekayasa Perangkat Lunak
-                                    </option>
-                                    <option value="Bioproses">Bioproses</option>
-                                    <option value="Manajemen Rekayasa">Manajemen Rekayasa</option>
-                                    <option value="Metalurgi">Metalurgi</option>
-                                </select> --}}
                             </div>
                             <div>
                                 <label for="yearSelect" class="block text-gray-700 font-bold mb-2">Filter by Year</label>
@@ -98,48 +84,45 @@
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger mb-3">Hapus Semua Lesson</button>
                             </form>
-                            <table class="lesson-table table-bordered table-striped w-full">
-                                <thead>
-                                    <tr>
-                                        <th>Sesi</th>
-                                        <th>Sunday</th>
-                                        <th>Monday</th>
-                                        <th>Tuesday</th>
-                                        <th>Wednesday</th>
-                                        <th>Thursday</th>
-                                        <th>Friday</th>
-                                        <th>Saturday</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    @foreach ($sessions as $sesi => $waktu)
+                            <div style="overflow-x: auto; width: 100%;">
+                                <table class="lesson-table table-bordered table-striped w-full whitespace-nowrap">
+                                    <thead>
                                         <tr>
-                                            <td>Sesi {{ $sesi }}<br><small>{{ $waktu }}</small></td>
-                                            @for ($dayIndex = 0; $dayIndex < 7; $dayIndex++)
-                                                @php
-                                                    $value = $calendarData[$sesi][$dayIndex] ?? null;
-                                                @endphp
-
-                                                @if (is_array($value))
-                                                    <td class="align-middle text-center clickable-cell bg-gray-100"
-                                                        data-class="{{ $value['class_name'] }}"
-                                                        data-teacher="{{ $value['teacher_name'] }}"
-                                                        data-time="{{ $waktu }}" data-day="{{ $dayIndex }}">
-                                                        <div class="font-semibold text-indigo-700">
-                                                            {{ $value['class_name'] }}</div>
-                                                        <div class="text-xs text-gray-600">Teacher:
-                                                            {{ $value['teacher_name'] }}</div>
-                                                    </td>
-                                                @else
-                                                    <td class="clickable-cell" data-time="{{ $waktu }}"
-                                                        data-day="{{ $dayIndex }}"></td>
-                                                @endif
-                                            @endfor
+                                            <th style="width: 150px;">Sesi</th>
+                                            @foreach ($weekdays as $id => $weekday)
+                                                <th style="width:500px;">{{ $weekday }}</th>
+                                            @endforeach
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+
+                                    <tbody>
+                                        @foreach ($sessions as $sessionId => $sessionTime)
+                                            <tr>
+                                                <td>{{ $sessionTime }}</td>
+
+                                                @foreach ($weekdays as $weekdayId => $weekday)
+                                                    <td>
+                                                        @if (isset($calendar[$sessionId][$weekdayId]))
+                                                            {{-- {{ dd($calendar[$sessionId][$weekdayId]) }} --}}
+                                                            @foreach ($calendar[$sessionId][$weekdayId] as $lesson)
+                                                                <div>
+                                                                    {{ $lesson->study_program_name }} -
+                                                                    {{ $lesson->course_name }} -
+                                                                    {{ $lesson->class_name }} -
+                                                                    {{ $lesson->teacher_name }} -
+                                                                    {{ $lesson->course_name }}
+                                                                </div>
+                                                            @endforeach
+                                                        @else
+                                                            -
+                                                        @endif
+                                                    </td>
+                                                @endforeach
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
