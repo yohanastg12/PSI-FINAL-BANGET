@@ -29,9 +29,11 @@
                         <h2 class="text-2xl font-bold mb-4">{{ trans('cruds.lesson.title_singular') }}
                             {{ trans('global.list') }}
                         </h2>
-                        <button id="modalBtnAddLesson" type="button" style="float: right;"
-                            class="ml-2 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition duration-200">Add
-                            Lesson</button>
+                        @can('lesson_create')
+                            <button id="modalBtnAddLesson" type="button" style="float: right;"
+                                class="ml-2 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition duration-200">Add
+                                Lesson</button>
+                        @endcan
                     </div>
 
                     <form method="GET" action="">
@@ -83,12 +85,15 @@
                             {{ trans('cruds.lesson.title_singular') }} {{ trans('global.list') }}
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('admin.calendar.clear-lessons') }}" method="POST"
-                                onsubmit="return confirm('Yakin ingin menghapus semua lesson?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger mb-3">Hapus Semua Lesson</button>
-                            </form>
+                            @can('lesson_delete')
+                                <form action="{{ route('admin.calendar.clear-lessons') }}" method="POST"
+                                    onsubmit="return confirm('Yakin ingin menghapus semua lesson?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger mb-3">Hapus Semua Lesson</button>
+                                </form>
+                            @endcan
+
                             <div style="overflow-x: auto; width: 100%;">
                                 <table class="lesson-table table-bordered table-striped w-full whitespace-nowrap">
                                     <thead>
