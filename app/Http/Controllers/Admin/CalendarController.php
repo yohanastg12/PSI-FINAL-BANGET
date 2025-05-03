@@ -9,29 +9,35 @@ use App\Session;
 use App\StudyProgram;
 use App\WeekDay;
 use App\Services\CalendarService;
+use Illuminate\Support\Facades\DB;
 
 class CalendarController extends Controller
 {
     public function index(CalendarService $calendarService)
     {
-        // Ambil hanya 7 hari (Monday - Sunday)
-        $weekDays = array_slice(Lesson::WEEK_DAYS, 0, 7);
-
-        // Generate calendar data
-        $calendarData = $calendarService->generateCalendarData($weekDays);
-
-        // PAKSA batasi data setiap sesi hanya untuk 7 hari
-        foreach ($calendarData as $timeKey => $entries) {
-            $calendarData[$timeKey] = array_slice($entries, 0, 7);
-        }
-
         // Ambil daftar kelas dan guru
         $classes = \App\SchoolClass::pluck('name', 'id');
         $teachers = \App\User::whereHas('roles', function ($query) {
             $query->where('id', 3); // ID 3 = guru
         })->pluck('name', 'id');
 
-        $lessons = Lesson::all();
+        $lessons = DB::table('lessons')
+            ->join('study_program', 'lessons.study_program_id', '=', 'study_program.id') // Join dengan study_programs
+            ->join('school_classes', 'lessons.class_id', '=', 'school_classes.id') // Join dengan school_classes
+            ->join('sessions', 'lessons.session_id', '=', 'sessions.id') // Join dengan sessions
+            ->join('course', 'lessons.course_id', '=', 'course.id') // Join dengan course
+            ->join('users as teachers', 'lessons.teacher_id', '=', 'teachers.id') // Join dengan users (alias teachers)
+            ->join('weekday', 'lessons.weekday_id', '=', 'weekday.id') // Join dengan weekdays
+            ->select(
+                'lessons.*',
+                'study_program.name as study_program_name',
+                'school_classes.name as class_name',
+                'course.name as course_name',
+                'teachers.name as teacher_name',
+                'weekday.name as weekday_name'
+            )
+            ->get();
+        // dd($lessons->toArray());
         $courses = Course::pluck('name', 'id');
 
         $sessions = Session::orderBy('id')->get()->mapWithKeys(function ($session) {
@@ -45,12 +51,21 @@ class CalendarController extends Controller
 
         $studyPrograms = StudyProgram::pluck('name', 'id');
 
-        return view('admin.calendar', compact('weekDays', 'calendarData', 'classes', 'teachers', 'lessons', 'sessions', 'courses', 'weekdays', 'studyPrograms'));
+        $calendar = [];
+
+        foreach ($lessons as $lesson) {
+            $sessionId = $lesson->session_id;
+            $weekdayId = $lesson->weekday_id;
+
+            $calendar[$sessionId][$weekdayId][] = $lesson;
+        }
+
+        return view('admin.calendar', compact('classes', 'teachers', 'lessons', 'sessions', 'courses', 'weekdays', 'studyPrograms', 'calendar'));
     }
 
     public function clearLessons()
     {
-        \App\Lesson::truncate(); // Reset semua lesson
+        Lesson::truncate(); // Reset semua lesson
         return redirect()->route('admin.calendar.index')->with('success', 'Semua lesson berhasil dihapus.');
     }
 }
