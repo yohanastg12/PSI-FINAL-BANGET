@@ -114,13 +114,15 @@
                                                     <td>
                                                         @if (isset($calendar[$sessionId][$weekdayId]))
                                                             @foreach ($calendar[$sessionId][$weekdayId] as $lesson)
-                                                                <div>
-                                                                    {{-- {{ $lesson->study_program_name }} - --}}
-                                                                    {{-- {{ $lesson->year }} - --}}
-                                                                    {{ $lesson->class_name }} -
-                                                                    {{ $lesson->course_name }} -
-                                                                    {{ $lesson->room_name }}
-                                                                    {{-- {{ $lesson->teacher_name }} - --}}
+                                                                <div style="cursor: pointer;" class="lesson-detail"
+                                                                    data-class="{{ $lesson->class_name }}"
+                                                                    data-course="{{ $lesson->course_name }}"
+                                                                    data-room="{{ $lesson->room_name }}"
+                                                                    data-program="{{ $lesson->study_program_name }}"
+                                                                    data-year="{{ $lesson->year }}"
+                                                                    data-teacher="{{ $lesson->teacher_name }}">
+                                                                    {{ $lesson->class_name }} - {{ $lesson->course_name }}
+                                                                    - {{ $lesson->room_name }}
                                                                 </div>
                                                             @endforeach
                                                         @else
@@ -137,6 +139,50 @@
                     </div>
                 </div>
             </div>
+            <!-- Modal Detail Lesson -->
+            <div class="modal fade" id="lessonDetailModal" tabindex="-1" role="dialog" aria-labelledby="lessonDetailLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Detail Lesson</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row mb-2">
+                                    <div class="col-4 font-weight-bold">Program Studi</div>
+                                    <div class="col-8" id="detailProgram"></div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-4 font-weight-bold">Tahun</div>
+                                    <div class="col-8" id="detailYear"></div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-4 font-weight-bold">Kelas</div>
+                                    <div class="col-8" id="detailClass"></div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-4 font-weight-bold">Mata Kuliah</div>
+                                    <div class="col-8" id="detailCourse"></div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-4 font-weight-bold">Ruangan</div>
+                                    <div class="col-8" id="detailRoom"></div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-4 font-weight-bold">Dosen</div>
+                                    <div class="col-8" id="detailTeacher"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Add Lesson -->
             <div id="addLessonModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
                 <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                     <div class="fixed inset-0 transition-opacity" aria-hidden="true">
@@ -356,6 +402,26 @@
                 if (event.target === addLessonModal) {
                     addLessonModal.classList.add('hidden');
                 }
+            });
+
+            $(document).ready(function() {
+                $('.lesson-detail').on('click', function() {
+                    const program = $(this).data('program');
+                    const year = $(this).data('year');
+                    const className = $(this).data('class');
+                    const course = $(this).data('course');
+                    const room = $(this).data('room');
+                    const teacher = $(this).data('teacher');
+
+                    $('#detailProgram').text(program);
+                    $('#detailYear').text(year);
+                    $('#detailClass').text(className);
+                    $('#detailCourse').text(course);
+                    $('#detailRoom').text(room);
+                    $('#detailTeacher').text(teacher);
+
+                    $('#lessonDetailModal').modal('show');
+                });
             });
         </script>
     @endsection
