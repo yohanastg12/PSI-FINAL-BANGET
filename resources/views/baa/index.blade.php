@@ -1,3 +1,7 @@
+<?php
+    $colspan = auth()->user()->can('ticketing_approval') ? 6 : 5;
+?>
+
 @extends('layouts.baa')
 
 @section('content')
@@ -50,7 +54,8 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4">No pending tickets found.</td>
+                            <!-- <td colspan="4">No pending tickets found.</td> -->
+                            <td colspan="{{ $colspan }}">No pending tickets found.</td>
                         </tr>
                     @endforelse
                 </tbody>
