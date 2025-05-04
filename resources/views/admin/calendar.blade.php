@@ -100,7 +100,7 @@
                                         <tr>
                                             <th style="width: 150px;">Sesi</th>
                                             @foreach ($weekdays as $id => $weekday)
-                                                <th style="width:500px;">{{ $weekday }}</th>
+                                                <th style="width:350px;">{{ $weekday }}</th>
                                             @endforeach
                                         </tr>
                                     </thead>
@@ -115,12 +115,12 @@
                                                         @if (isset($calendar[$sessionId][$weekdayId]))
                                                             @foreach ($calendar[$sessionId][$weekdayId] as $lesson)
                                                                 <div>
-                                                                    {{ $lesson->study_program_name }} -
-                                                                    {{ $lesson->year }} -
+                                                                    {{-- {{ $lesson->study_program_name }} - --}}
+                                                                    {{-- {{ $lesson->year }} - --}}
                                                                     {{ $lesson->class_name }} -
-                                                                    {{ $lesson->room_name }} -
-                                                                    {{ $lesson->teacher_name }} -
-                                                                    {{ $lesson->course_name }}
+                                                                    {{ $lesson->course_name }} -
+                                                                    {{ $lesson->room_name }}
+                                                                    {{-- {{ $lesson->teacher_name }} - --}}
                                                                 </div>
                                                             @endforeach
                                                         @else
