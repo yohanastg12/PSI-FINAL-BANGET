@@ -68,6 +68,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('calendar', 'CalendarController@index')->name('calendar.index');
     Route::get('/calendar/lesson/{day}/{time}', [LessonsController::class, 'show'])->name('admin.calendar.show');
     Route::delete('/calendar/clear-lessons', [CalendarController::class, 'clearLessons'])->name('calendar.clear-lessons');
+
+    // Room
+    Route::get('room', 'RoomController@index')->name('room.index');
+    Route::delete('room/destroy', 'RoomController@massDestroy')->name('room.massDestroy');
+    Route::resource('room', 'RoomController');
 });
 
 

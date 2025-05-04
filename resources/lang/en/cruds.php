@@ -97,6 +97,8 @@ return [
             'class_helper' => '',
             'year' => 'Year',
             'year_helper' => '',
+            'room' => 'Room',
+            'room_helper' => '',
         ],
     ],
     'schoolClass' => [
@@ -134,6 +136,22 @@ return [
     'studyProgram' => [
         'title' => 'Study Program',
         'title_singular' => 'Study Program',
+        'fields' => [
+            'id' => 'ID',
+            'id_helper' => '',
+            'name' => 'Name',
+            'name_helper' => '',
+            'created_at' => 'Created at',
+            'created_at_helper' => '',
+            'updated_at' => 'Updated at',
+            'updated_at_helper' => '',
+            'deleted_at' => 'Deleted at',
+            'deleted_at_helper' => '',
+        ],
+    ],
+    'room' => [
+        'title' => 'Room',
+        'title_singular' => 'Room',
         'fields' => [
             'id' => 'ID',
             'id_helper' => '',

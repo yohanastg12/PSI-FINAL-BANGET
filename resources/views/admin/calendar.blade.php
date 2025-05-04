@@ -100,7 +100,7 @@
                                         <tr>
                                             <th style="width: 150px;">Sesi</th>
                                             @foreach ($weekdays as $id => $weekday)
-                                                <th style="width:500px;">{{ $weekday }}</th>
+                                                <th style="width:350px;">{{ $weekday }}</th>
                                             @endforeach
                                         </tr>
                                     </thead>
@@ -115,11 +115,12 @@
                                                         @if (isset($calendar[$sessionId][$weekdayId]))
                                                             @foreach ($calendar[$sessionId][$weekdayId] as $lesson)
                                                                 <div>
-                                                                    {{ $lesson->study_program_name }} -
-                                                                    {{ $lesson->year }} -
+                                                                    {{-- {{ $lesson->study_program_name }} - --}}
+                                                                    {{-- {{ $lesson->year }} - --}}
                                                                     {{ $lesson->class_name }} -
-                                                                    {{ $lesson->teacher_name }} -
-                                                                    {{ $lesson->course_name }}
+                                                                    {{ $lesson->course_name }} -
+                                                                    {{ $lesson->room_name }}
+                                                                    {{-- {{ $lesson->teacher_name }} - --}}
                                                                 </div>
                                                             @endforeach
                                                         @else
@@ -208,6 +209,28 @@
                                                 <span
                                                     class="help-block">{{ trans('cruds.lesson.fields.class_helper') }}</span>
                                             </div>
+
+                                            <div class="form-group">
+                                                <label class="required"
+                                                    for="room_id">{{ trans('cruds.lesson.fields.room') }}</label>
+                                                <select
+                                                    class="form-control select2 {{ $errors->has('room') ? 'is-invalid' : '' }}"
+                                                    name="room_id" id="room_id" required>
+                                                    @foreach ($rooms as $id => $room)
+                                                        <option value="{{ $id }}"
+                                                            {{ old('room_id') == $id ? 'selected' : '' }}>
+                                                            {{ $room }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @if ($errors->has('room'))
+                                                    <div class="invalid-feedback">
+                                                        {{ $errors->first('room') }}
+                                                    </div>
+                                                @endif
+                                                <span
+                                                    class="help-block">{{ trans('cruds.lesson.fields.class_helper') }}</span>
+                                            </div>
+
                                             <div class="form-group">
                                                 <label class="required"
                                                     for="teacher_id">{{ trans('cruds.lesson.fields.teacher') }}</label>

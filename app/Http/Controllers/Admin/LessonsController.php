@@ -52,6 +52,7 @@ class LessonsController extends Controller
             'class_id' => 'required',
             'course_id' => 'required',
             'teacher_id' => 'required',
+            'room_id' => 'required',
             'year' => 'required',
         ]);
 
@@ -63,6 +64,7 @@ class LessonsController extends Controller
             'teacher_id' => $request->teacher_id,
             'course_id' => $request->course_id,
             'session_id' => $request->session_id,
+            'room_id' => $request->room_id,
             'year' => $request->year,
         ]);
 
