@@ -19,6 +19,7 @@
                         <th>Name</th>
                         <th>Description</th>
                         <th>Role</th>
+                        <th>Status</th>
                         <th>Submitted At</th>
                         @can("ticketing_approval")
                         <th>Action</th>
@@ -32,6 +33,7 @@
                             <td>{{ $ticket->name }}</td>
                             <td>{{ $ticket->description }}</td>
                             <td>{{ $ticket->role }}</td>
+                            <td>{{  $ticket->status }}</td>
                             <td>{{ $ticket->created_at->format('d M Y') }}</td>
                             @can("ticketing_approval")
                             <td>
