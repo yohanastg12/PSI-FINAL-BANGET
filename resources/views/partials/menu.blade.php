@@ -8,12 +8,12 @@ $roleId = Auth::user()->roles->first()->id ?? null;
     <nav class="sidebar-nav">
 
         <ul class="nav">
-        <li class="nav-item">
-            @if ($user->role_id == 2)
-                <a href="{{ route('baa.dashboard') }}" class="nav-link">
-            @else
-                <a href="{{ route('admin.home') }}" class="nav-link">
-            @endif
+            <li class="nav-item">
+                @if ($roleId == 2)
+                    <a href="{{ route('baa.dashboard') }}" class="nav-link">
+                    @else
+                        <a href="{{ route('admin.home') }}" class="nav-link">
+                @endif
                 <i class="nav-icon fas fa-fw fa-tachometer-alt"></i>
                 {{ trans('global.dashboard') }}
                 </a>
@@ -129,15 +129,15 @@ $roleId = Auth::user()->roles->first()->id ?? null;
                 </a>
             </li> -->
             <li class="nav-item">
-                @if ($roleId == 1) 
+                @if ($roleId == 1)
                     <a href="{{ route('baa.dashboard') }}"
-                    class="nav-link {{ request()->is('baa/dashboard') ? 'active' : '' }}">
-                @else
-                    <a href="{{ route('student.ticketing.index') }}"
-                    class="nav-link {{ request()->is('admin/admin/ticketing') ? 'active' : '' }}">
+                        class="nav-link {{ request()->is('baa/dashboard') ? 'active' : '' }}">
+                    @else
+                        <a href="{{ route('student.ticketing.index') }}"
+                            class="nav-link {{ request()->is('admin/admin/ticketing') ? 'active' : '' }}">
                 @endif
-                    <i class="fa-fw fas fa-ticket-alt nav-icon"></i>
-                    Ticketing
+                <i class="fa-fw fas fa-ticket-alt nav-icon"></i>
+                Ticketing
                 </a>
             </li>
 
