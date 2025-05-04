@@ -118,6 +118,7 @@
                                                                     {{ $lesson->study_program_name }} -
                                                                     {{ $lesson->year }} -
                                                                     {{ $lesson->class_name }} -
+                                                                    {{ $lesson->room_name }} -
                                                                     {{ $lesson->teacher_name }} -
                                                                     {{ $lesson->course_name }}
                                                                 </div>
@@ -208,6 +209,28 @@
                                                 <span
                                                     class="help-block">{{ trans('cruds.lesson.fields.class_helper') }}</span>
                                             </div>
+
+                                            <div class="form-group">
+                                                <label class="required"
+                                                    for="room_id">{{ trans('cruds.lesson.fields.room') }}</label>
+                                                <select
+                                                    class="form-control select2 {{ $errors->has('room') ? 'is-invalid' : '' }}"
+                                                    name="room_id" id="room_id" required>
+                                                    @foreach ($rooms as $id => $room)
+                                                        <option value="{{ $id }}"
+                                                            {{ old('room_id') == $id ? 'selected' : '' }}>
+                                                            {{ $room }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @if ($errors->has('room'))
+                                                    <div class="invalid-feedback">
+                                                        {{ $errors->first('room') }}
+                                                    </div>
+                                                @endif
+                                                <span
+                                                    class="help-block">{{ trans('cruds.lesson.fields.class_helper') }}</span>
+                                            </div>
+
                                             <div class="form-group">
                                                 <label class="required"
                                                     for="teacher_id">{{ trans('cruds.lesson.fields.teacher') }}</label>

@@ -6,6 +6,7 @@ use App\Course;
 use App\Http\Controllers\Controller;
 use App\Lesson;
 use App\Session;
+use App\Room;
 use App\StudyProgram;
 use App\WeekDay;
 use App\Services\CalendarService;
@@ -29,10 +30,12 @@ class CalendarController extends Controller
             ->join('course', 'lessons.course_id', '=', 'course.id') // Join dengan course
             ->join('users as teachers', 'lessons.teacher_id', '=', 'teachers.id') // Join dengan users (alias teachers)
             ->join('weekday', 'lessons.weekday_id', '=', 'weekday.id') // Join dengan weekdays
+            ->join('room', 'lessons.room_id', '=', 'room.id') // Join dengan room
             ->select(
                 'lessons.*',
                 'study_program.name as study_program_name',
                 'school_classes.name as class_name',
+                'room.name as room_name',
                 'course.name as course_name',
                 'teachers.name as teacher_name',
                 'weekday.name as weekday_name'
@@ -69,6 +72,7 @@ class CalendarController extends Controller
         $weekdays = Weekday::orderBy('id')->pluck('name', 'id')->toArray();
 
         $studyPrograms = StudyProgram::pluck('name', 'id');
+        $rooms = Room::pluck('name', 'id');
 
         $calendar = [];
 
@@ -79,7 +83,7 @@ class CalendarController extends Controller
             $calendar[$sessionId][$weekdayId][] = $lesson;
         }
 
-        return view('admin.calendar', compact('classes', 'teachers', 'lessons', 'sessions', 'courses', 'weekdays', 'studyPrograms', 'calendar', 'years'));
+        return view('admin.calendar', compact('classes', 'teachers', 'lessons', 'sessions', 'courses', 'weekdays', 'studyPrograms', 'calendar', 'years', 'rooms'));
     }
 
     public function clearLessons()

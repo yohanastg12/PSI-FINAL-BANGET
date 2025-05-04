@@ -25,6 +25,7 @@ class Lesson extends Model
         'teacher_id',
         'course_id',
         'session_id',
+        'room_id',
         'year'
     ];
 
@@ -57,5 +58,10 @@ class Lesson extends Model
     public function teacher()
     {
         return $this->belongsTo(User::class, 'teacher_id');
+    }
+
+    public function room()
+    {
+        return $this->belongsTo(Room::class, 'room_id');
     }
 }

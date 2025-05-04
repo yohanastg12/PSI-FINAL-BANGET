@@ -97,6 +97,8 @@ return [
             'class_helper' => '',
             'year' => 'Year',
             'year_helper' => '',
+            'room' => 'Room',
+            'room_helper' => '',
         ],
     ],
     'schoolClass' => [
