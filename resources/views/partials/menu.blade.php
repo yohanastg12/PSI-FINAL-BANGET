@@ -7,16 +7,16 @@
     <nav class="sidebar-nav">
 
         <ul class="nav">
-        <li class="nav-item">
-            @if ($user->role_id == 2)
-                <a href="{{ route('baa.dashboard') }}" class="nav-link">
-            @else
-                <a href="{{ route('admin.home') }}" class="nav-link">
-            @endif
+            <li class="nav-item">
+                @if ($user->role_id == 2)
+                    <a href="{{ route('baa.dashboard') }}" class="nav-link">
+                    @else
+                        <a href="{{ route('admin.home') }}" class="nav-link">
+                @endif
                 <i class="nav-icon fas fa-fw fa-tachometer-alt"></i>
                 {{ trans('global.dashboard') }}
-            </a>
-        </li>
+                </a>
+            </li>
             @can('user_management_access')
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link  nav-dropdown-toggle" href="#">
@@ -89,6 +89,15 @@
                                     class="nav-link {{ request()->is('admin/study-program') || request()->is('admin/study-program/*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-book nav-icon"></i>
                                     {{ trans('cruds.studyProgram.title') }}
+                                </a>
+                            </li>
+                        @endcan
+                        @can('room_access')
+                            <li class="nav-item">
+                                <a href="{{ route('admin.room.index') }}"
+                                    class="nav-link {{ request()->is('admin/room') || request()->is('admin/room/*') ? 'active' : '' }}">
+                                    <i class="fa-fw fas fa-book nav-icon"></i>
+                                    {{ trans('cruds.room.title') }}
                                 </a>
                             </li>
                         @endcan

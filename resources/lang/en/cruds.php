@@ -147,4 +147,20 @@ return [
             'deleted_at_helper' => '',
         ],
     ],
+    'room' => [
+        'title' => 'Room',
+        'title_singular' => 'Room',
+        'fields' => [
+            'id' => 'ID',
+            'id_helper' => '',
+            'name' => 'Name',
+            'name_helper' => '',
+            'created_at' => 'Created at',
+            'created_at_helper' => '',
+            'updated_at' => 'Updated at',
+            'updated_at_helper' => '',
+            'deleted_at' => 'Deleted at',
+            'deleted_at_helper' => '',
+        ],
+    ],
 ];
