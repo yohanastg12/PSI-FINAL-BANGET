@@ -65,6 +65,7 @@ class CalendarController extends Controller
         })->toArray();
 
         $years = DB::table('lessons')
+            ->whereNull('deleted_at')
             ->selectRaw('DISTINCT year')
             ->orderBy('year', 'desc')
             ->pluck('year')
