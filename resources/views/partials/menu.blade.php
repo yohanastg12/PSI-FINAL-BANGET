@@ -1,7 +1,6 @@
 <?php
 $user = Auth::user();
 $roleId = Auth::user()->roles->first()->id ?? null;
-// dd($role)
 ?>
 
 <div class="sidebar">
@@ -51,20 +50,7 @@ $roleId = Auth::user()->roles->first()->id ?? null;
                                     {{ trans('cruds.user.title') }}
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.users.index') }}?role=3"
-                                    class="nav-link {{ request()->is('admin/users') || request()->is('admin/users/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-user nav-icon"></i>
-                                    Teachers
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.users.index') }}?role=4"
-                                    class="nav-link {{ request()->is('admin/users') || request()->is('admin/users/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-user nav-icon"></i>
-                                    Students
-                                </a>
-                            </li>
+                            
                         @endcan
                         @can('school_class_access')
                             <li class="nav-item">
@@ -121,15 +107,8 @@ $roleId = Auth::user()->roles->first()->id ?? null;
                     Calendar
                 </a>
             </li>
-            <!-- <li class="nav-item">
-                <a href="{{ route('student.ticketing.index') }}"
-                    class="nav-link {{ request()->is('admin/admin/ticketing') ? 'active' : '' }}">
-                    <i class="fa-fw fas fa-ticket-alt nav-icon"></i>
-                    Ticketing
-                </a>
-            </li> -->
             <li class="nav-item">
-                @if ($roleId == 1)
+                @if ($roleId == 1 || $roleId == 2)
                     <a href="{{ route('baa.dashboard') }}"
                         class="nav-link {{ request()->is('baa/dashboard') ? 'active' : '' }}">
                     @else
