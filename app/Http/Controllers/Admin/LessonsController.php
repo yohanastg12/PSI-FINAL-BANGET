@@ -56,6 +56,30 @@ class LessonsController extends Controller
             'year' => 'required',
         ]);
 
+        // Cek apakah teacher sudah terjadwal di sesi dan hari yang sama
+        $teacherConflict = Lesson::where('teacher_id', $request->teacher_id)
+            ->where('session_id', $request->session_id)
+            ->where('weekday_id', $request->weekday_id)
+            ->where('year', $request->year)
+            ->whereNull("deleted_at")
+            ->exists();
+
+        if ($teacherConflict) {
+            return redirect()->back()->withErrors(['teacher_id' => 'Dosen sudah dijadwalkan pada sesi dan hari yang sama.'])->withInput();
+        }
+
+        // Cek apakah ruangan sudah digunakan di sesi dan hari yang sama
+        $roomConflict = Lesson::where('room_id', $request->room_id)
+            ->where('session_id', $request->session_id)
+            ->where('weekday_id', $request->weekday_id)
+            ->where('year', $request->year)
+            ->whereNull("deleted_at")
+            ->exists();
+
+        if ($roomConflict) {
+            return redirect()->back()->withErrors(['room_id' => 'Ruangan sudah digunakan pada sesi dan hari yang sama.'])->withInput();
+        }
+
         // Simpan data lesson dengan session_id yang dipilih
         Lesson::create([
             'weekday_id' => $request->weekday_id,

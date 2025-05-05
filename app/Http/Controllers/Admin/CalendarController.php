@@ -31,6 +31,7 @@ class CalendarController extends Controller
             ->join('users as teachers', 'lessons.teacher_id', '=', 'teachers.id') // Join dengan users (alias teachers)
             ->join('weekday', 'lessons.weekday_id', '=', 'weekday.id') // Join dengan weekdays
             ->join('room', 'lessons.room_id', '=', 'room.id') // Join dengan room
+            ->whereNull("lessons.deleted_at")
             ->select(
                 'lessons.*',
                 'study_program.name as study_program_name',
