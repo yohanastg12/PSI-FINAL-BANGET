@@ -115,6 +115,7 @@
                                                         @if (isset($calendar[$sessionId][$weekdayId]))
                                                             @foreach ($calendar[$sessionId][$weekdayId] as $lesson)
                                                                 <div style="cursor: pointer;" class="lesson-detail"
+                                                                    data-id="{{ $lesson->id }}"
                                                                     data-class="{{ $lesson->class_name }}"
                                                                     data-course="{{ $lesson->course_name }}"
                                                                     data-room="{{ $lesson->room_name }}"
@@ -177,6 +178,16 @@
                                     <div class="col-4 font-weight-bold">Dosen</div>
                                     <div class="col-8" id="detailTeacher"></div>
                                 </div>
+                                @can('lesson_delete')
+                                    <form id="deleteLessonForm" method="POST"
+                                        onsubmit="return confirm('{{ trans('global.areYouSure') }}');" class="text-end mb-3">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            {{ trans('global.delete') }}
+                                        </button>
+                                    </form>
+                                @endcan
                             </div>
                         </div>
                     </div>
@@ -385,27 +396,31 @@
     @section('scripts')
         @parent
         <script>
-            const modalBtnAddLesson = document.getElementById('modalBtnAddLesson');
-            const closeModalBtn = document.getElementById('closeModalBtn');
-            const addLessonModal = document.getElementById('addLessonModal');
+            @can('lesson_create')
+                const modalBtnAddLesson = document.getElementById('modalBtnAddLesson');
+                const closeModalBtn = document.getElementById('closeModalBtn');
+                const addLessonModal = document.getElementById('addLessonModal');
 
-            modalBtnAddLesson.addEventListener('click', () => {
-                addLessonModal.classList.remove('hidden');
-            });
+                modalBtnAddLesson.addEventListener('click', () => {
+                    addLessonModal.classList.remove('hidden');
+                });
 
-            closeModalBtn.addEventListener('click', () => {
-                addLessonModal.classList.add('hidden');
-            });
-
-            // Tutup modal jika area di luar modal diklik
-            window.addEventListener('click', (event) => {
-                if (event.target === addLessonModal) {
+                closeModalBtn.addEventListener('click', () => {
                     addLessonModal.classList.add('hidden');
-                }
-            });
+                });
+
+                // Tutup modal jika area di luar modal diklik
+                window.addEventListener('click', (event) => {
+                    if (event.target === addLessonModal) {
+                        addLessonModal.classList.add('hidden');
+                    }
+                });
+            @endcan
+
 
             $(document).ready(function() {
                 $('.lesson-detail').on('click', function() {
+                    const id = $(this).data('id');
                     const program = $(this).data('program');
                     const year = $(this).data('year');
                     const className = $(this).data('class');
@@ -420,6 +435,11 @@
                     $('#detailRoom').text(room);
                     $('#detailTeacher').text(teacher);
 
+                    // Set form action dynamically
+                    const deleteUrl = `{{ url('admin/lessons') }}/${id}`;
+                    $('#deleteLessonForm').attr('action', deleteUrl);
+
+                    // Show the modal
                     $('#lessonDetailModal').modal('show');
                 });
             });
