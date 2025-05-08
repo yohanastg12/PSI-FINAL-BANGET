@@ -23,6 +23,7 @@ class Lesson extends Model
         'class_id',
         'study_program_id',
         'teacher_id',
+        'teaching_assistant_id',
         'course_id',
         'session_id',
         'room_id',

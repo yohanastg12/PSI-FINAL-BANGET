@@ -114,17 +114,17 @@
                                                     <td>
                                                         @if (isset($calendar[$sessionId][$weekdayId]))
                                                             @foreach ($calendar[$sessionId][$weekdayId] as $lesson)
-                                                                <div style="cursor: pointer;" class="lesson-detail"
-                                                                    data-id="{{ $lesson->id }}"
-                                                                    data-class="{{ $lesson->class_name }}"
-                                                                    data-course="{{ $lesson->course_name }}"
-                                                                    data-room="{{ $lesson->room_name }}"
-                                                                    data-program="{{ $lesson->study_program_name }}"
-                                                                    data-year="{{ $lesson->year }}"
-                                                                    data-teacher="{{ $lesson->teacher_name }}">
-                                                                    {{ $lesson->class_name }} - {{ $lesson->course_name }}
-                                                                    - {{ $lesson->room_name }}
-                                                                </div>
+                                                            <div style="cursor: pointer;" class="lesson-detail"
+                                                                data-id="{{ $lesson->id }}"
+                                                                data-class="{{ $lesson->class_name }}"
+                                                                data-course="{{ $lesson->course_name }}"
+                                                                data-room="{{ $lesson->room_name }}"
+                                                                data-program="{{ $lesson->study_program_name }}"
+                                                                data-year="{{ $lesson->year }}"
+                                                                data-teacher="{{ $lesson->teacher_name }}"
+                                                                data-assistant="{{ $lesson->teaching_assistant_name ?? '' }}"> <!-- Tambahkan data-assistant -->
+                                                                {{ $lesson->class_name }} - {{ $lesson->course_name }} - {{ $lesson->room_name }}
+                                                            </div>
                                                             @endforeach
                                                         @else
                                                             -
@@ -177,6 +177,10 @@
                                 <div class="row mb-2">
                                     <div class="col-4 font-weight-bold">Dosen</div>
                                     <div class="col-8" id="detailTeacher"></div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-4 font-weight-bold">Teaching Assistant</div>
+                                    <div class="col-8" id="detailAssistant"></div>
                                 </div>
                                 @can('lesson_delete')
                                     <form id="deleteLessonForm" method="POST"
@@ -308,6 +312,28 @@
                                                 <span
                                                     class="help-block">{{ trans('cruds.lesson.fields.teacher_helper') }}</span>
                                             </div>
+
+                                            <div class="form-group">
+                                                <label class=""
+                                                    for="teaching_assistant_id">Teaching Asistant</label>
+                                                <select
+                                                    class="form-control select2 {{ $errors->has('teacher') ? 'is-invalid' : '' }}"
+                                                    name="teaching_assistant_id" id="teaching_assistant_id" >
+                                                    <option value="">-- None --</option>
+                                                    @foreach ($asistant as $id => $name)
+                                                        <option value="{{ $id }}" {{ old('teaching_assistant_id') == $id ? 'selected' : '' }}>
+                                                            {{ $name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @if ($errors->has('teaching_assistant'))
+                                                    <div class="invalid-feedback">
+                                                        {{ $errors->first('teaching_assistant') }}
+                                                    </div>
+                                                @endif
+                                                <span
+                                                    class="help-block">{{ trans('cruds.lesson.fields.teacher_helper') }}</span>
+                                            </div>
                                             <div class="form-group">
                                                 <label class="required"
                                                     for="weekday_id">{{ trans('cruds.lesson.fields.weekday') }}</label>
@@ -427,6 +453,7 @@
                     const course = $(this).data('course');
                     const room = $(this).data('room');
                     const teacher = $(this).data('teacher');
+                    const assistant = $(this).data('assistant')
 
                     $('#detailProgram').text(program);
                     $('#detailYear').text(year);
@@ -434,6 +461,7 @@
                     $('#detailCourse').text(course);
                     $('#detailRoom').text(room);
                     $('#detailTeacher').text(teacher);
+                    $('#detailAssistant').text(assistant | '-')
 
                     // Set form action dynamically
                     const deleteUrl = `{{ url('admin/lessons') }}/${id}`;

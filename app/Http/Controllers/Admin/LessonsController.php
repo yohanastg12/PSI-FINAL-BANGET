@@ -86,6 +86,7 @@ class LessonsController extends Controller
             'study_program_id' => $request->study_program_id,
             'class_id' => $request->class_id,
             'teacher_id' => $request->teacher_id,
+            'teaching_assistant_id' => $request->teaching_assistant_id,
             'course_id' => $request->course_id,
             'session_id' => $request->session_id,
             'room_id' => $request->room_id,
@@ -158,7 +159,7 @@ class LessonsController extends Controller
 
     public function getLessons()
     {
-        $lessons = Lesson::with(['class', 'teacher'])->get()->map(function ($lesson) {
+        $lessons = Lesson::with(['class', 'teacher', 'teachingAssistants'])->get()->map(function ($lesson) {
             $sessions = [
                 '1' => ['start' => '08:00', 'end' => '08:50'],
                 '2' => ['start' => '09:00', 'end' => '09:50'],
@@ -179,6 +180,7 @@ class LessonsController extends Controller
                 'weekday' => $lesson->weekday,
                 'class' => $lesson->class->name ?? '-',
                 'teacher' => $lesson->teacher->name ?? '-',
+                'asistant' => $lesson->teachingAssistants->pluck('name')->toArray(),
                 'start_session' => $session['start'],
                 'end_session' => $session['end'],
             ];

@@ -1,6 +1,7 @@
 <?php
 $user = Auth::user();
 $roleId = Auth::user()->roles->first()->id ?? null;
+$roleName = Auth::user()->roles->first()->name ?? null;
 ?>
 
 <div class="sidebar">
