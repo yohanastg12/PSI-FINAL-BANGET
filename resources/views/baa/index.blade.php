@@ -1,5 +1,7 @@
 <?php
     $colspan = auth()->user()->can('ticketing_approval') ? 6 : 5;
+    $user = Auth::user();
+    $roleId = Auth::user()->roles->first()->id ?? null;
 ?>
 
 @extends('layouts.baa')
@@ -32,7 +34,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($tickets as $ticket)
+                    <?php 
+                        $ticketList = (isset($ticketAdmin) && $roleId == 1) ? $ticketAdmin : (isset($tickets) ? $tickets : collect());
+                    ?>
+                    @forelse ($ticketList as $ticket)
                         <tr>
                             <td>{{ $ticket->name }}</td>
                             <td>{{ $ticket->description }}</td>

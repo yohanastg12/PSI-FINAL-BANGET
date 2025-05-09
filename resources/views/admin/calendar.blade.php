@@ -461,7 +461,7 @@
                     $('#detailCourse').text(course);
                     $('#detailRoom').text(room);
                     $('#detailTeacher').text(teacher);
-                    $('#detailAssistant').text(assistant | '-')
+                    $('#detailAssistant').text(assistant || '-')
 
                     // Set form action dynamically
                     const deleteUrl = `{{ url('admin/lessons') }}/${id}`;
