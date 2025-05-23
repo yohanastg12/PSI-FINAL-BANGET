@@ -56,7 +56,7 @@
                             </div>
                             {{-- Year Filter --}}
                             <div>
-                                <label for="yearSelect" class="block text-gray-700 font-bold mb-2">Filter by Year</label>
+                                <label for="yearSelect" class="block text-gray-700 font-bold mb-2">Filter by Academic Year</label>
                                 <select name="year" id="yearSelect"
                                     class="block w-full bg-white border border-gray-300 rounded-md py-2 px-3 shadow-sm">
                                     <option value="" {{ request('year') == '' ? 'selected' : '' }}>-- All Year --

@@ -44,18 +44,21 @@
                             <td>{{ $ticket->role }}</td>
                             <td>{{  $ticket->status }}</td>
                             <td>{{ $ticket->created_at->format('d M Y') }}</td>
-                            @can("ticketing_approval")
-                            <td>
-                                <form action="{{ route('baa.tickets.approve', $ticket->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to approve this ticket?');">
-                                    @csrf
-                                    <button class="btn btn-xs btn-success">Approve</button>
-                                </form>
-                                <form action="{{ route('baa.tickets.reject', $ticket->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to reject this ticket?');">
-                                    @csrf
-                                    <button class="btn btn-xs btn-danger">Reject</button>
-                                </form>
-                            </td>   
-                            @endcan
+                    @can("ticketing_approval")
+                    <td>
+                        @if($ticket->status == 'pending')
+                            <form action="{{ route('baa.tickets.approve', $ticket->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to approve this ticket?');">
+                                @csrf
+                                <button class="btn btn-xs btn-success">Approve</button>
+                            </form>
+                            <a href="{{ route('baa.ticket.reject.form', $ticket->id) }}" class="btn btn-danger">Reject</a>
+                        @elseif($ticket->status == 'approved')
+                            <span class="badge bg-success">Disetujui</span>
+                        @elseif($ticket->status == 'rejected')
+                            <span class="badge bg-danger">Ditolak</span>
+                        @endif
+                    </td>
+                    @endcan
                         </tr>
                     @empty
                         <tr>

@@ -113,7 +113,7 @@ $roleName = Auth::user()->roles->first()->name ?? null;
                     <a href="{{ route('baa.dashboard') }}"
                         class="nav-link {{ request()->is('baa/dashboard') ? 'active' : '' }}">
                     @else
-                        <a href="{{ route('student.ticketing.index') }}"
+                        <a href="{{ route('student.ticket.index') }}"
                             class="nav-link {{ request()->is('admin/admin/ticketing') ? 'active' : '' }}">
                 @endif
                 <i class="fa-fw fas fa-ticket-alt nav-icon"></i>

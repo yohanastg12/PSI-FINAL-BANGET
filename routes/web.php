@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\PreferenceController;
 use App\Http\Controllers\Admin\CalendarController;
 use App\Http\Controllers\Admin\TicketController;
 use App\Http\Controllers\baa\BAAController;
+use App\Http\Controllers\Student\TicketController as StudentTicketController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Student\HomeController as StudentHomeController;
 
 // Redirect ke login jika belum login
@@ -27,10 +29,9 @@ Route::get('/home', function () {
 Auth::routes(['register' => false]);
 
 
-// Route untuk ADMIN
-
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
-    Route::get('/', 'HomeController@index')->name('home');
+    // Ganti route '/' untuk mengarah ke dashboard
+    Route::get('/', 'DashboardController@index')->name('home');  // Mengarah langsung ke DashboardController
 
     // Permissions
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
@@ -80,21 +81,22 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
 Route::middleware(['auth'])->group(function () {
     // Home Student
-    Route::get('/student/home', [StudentHomeController::class, 'index'])->name('student.home');
+Route::get('/student/home', [StudentHomeController::class, 'index'])->name('student.home');
+Route::get('/ticket/create', [StudentTicketController::class, 'create'])->name('student.ticket.create');
+Route::post('/ticket/store', [StudentTicketController::class, 'store'])->name('student.ticket.store');    
+Route::get('/ticket/{id}/edit', [StudentTicketController::class, 'edit'])->name('ticket.edit');
+Route::put('/ticket/{id}', [StudentTicketController::class, 'update'])->name('student.ticket.update');
+Route::delete('/ticket/{id}', [StudentTicketController::class, 'destroy'])->name('student.ticket.destroy');
+Route::get('/ticketing', [StudentTicketController::class, 'history'])->name('student.ticket.index');
+Route::get('/ticket/{id}/edit', [StudentTicketController::class, 'edit'])->name('student.ticket.edit');
 
-
-    // Ticketing Student
-
-    Route::get('/ticketing', [TicketController::class, 'index'])->name('student.ticketing.index');
-    Route::post('/student/ticketing', [TicketController::class, 'store'])->name('student.ticket.store');
-
-
+Route::get('/ticket/history', [StudentTicketController::class, 'history'])->name('student.ticket.history');
 });
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/baa/dashboard', [BAAController::class, 'index'])->name('baa.dashboard');
     Route::get('/baa/tickets', [BAAController::class, 'tickets'])->name('baa.tickets');
     Route::post('/baa/tickets/{id}/approve', [BAAController::class, 'approve'])->name('baa.tickets.approve');
-    Route::post('/baa/tickets/{id}/reject', [BAAController::class, 'reject'])->name('baa.tickets.reject');
-
+Route::get('baa/ticket/{id}/reject', [BAAController::class, 'showRejectForm'])->name('baa.ticket.reject.form');
+Route::post('baa/ticket/{id}/reject', [BAAController::class, 'reject'])->name('baa.ticket.reject');
 });

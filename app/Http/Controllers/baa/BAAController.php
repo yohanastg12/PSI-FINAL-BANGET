@@ -3,6 +3,7 @@ namespace App\Http\Controllers\baa;
 
 use App\Ticket;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 
 class BAAController extends Controller
@@ -22,25 +23,35 @@ class BAAController extends Controller
         return view('baa.index', compact('tickets', 'ticketAdmin'));
     }
 
-    public function approve($id)
-    {
-        $ticket = Ticket::findOrFail($id);
-        $ticket->status = 'approved';
-        $ticket->approved_by = auth()->id(); 
-        $ticket->save();
+public function approve($id)
+{
+    $ticket = Ticket::findOrFail($id);
+    $ticket->status = 'approved';
+    $ticket->approved_by = auth()->id();
+    $ticket->save();
 
-        return redirect()->back()->with('success', 'Ticket approved successfully.');
-    }
+    return redirect()->route('baa.dashboard')->with('success', 'Ticket approved successfully.');
+}
 
-    public function reject($id)
-    {
-        $ticket = Ticket::findOrFail($id);
-        $ticket->status = 'rejected';
-        $ticket->approved_by = auth()->id(); // optional jika ingin tahu siapa yang menolak
-        $ticket->save();
+public function showRejectForm($id)
+{
+    $ticket = Ticket::findOrFail($id);
+    return view('baa.reject_form', compact('ticket'));
+}
 
-        return redirect()->back()->with('success', 'Ticket berhasil ditolak.');
-    }
+public function reject(Request $request, $id)
+{
+    $request->validate([
+        'reject_reason' => 'required|string|max:1000',
+    ]);
 
+    $ticket = Ticket::findOrFail($id);
+    $ticket->status = 'rejected';
+    $ticket->approved_by = auth()->id();
+    $ticket->reject_reason = $request->reject_reason;
+    $ticket->save();
+
+    return redirect()->route('baa.dashboard')->with('success', 'Ticket berhasil ditolak.');
+}
     
 }

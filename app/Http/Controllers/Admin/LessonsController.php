@@ -79,6 +79,18 @@ class LessonsController extends Controller
         if ($roomConflict) {
             return redirect()->back()->withErrors(['room_id' => 'Ruangan sudah digunakan pada sesi dan hari yang sama.'])->withInput();
         }
+        
+        // Cek apakah class sudah digunakan di sesi dan hari yang sama
+        $classConflict = Lesson::where('class_id', $request->class_id)
+            ->where('session_id', $request->session_id)
+            ->where('weekday_id', $request->weekday_id)
+            ->where('year', $request->year)
+            ->whereNull("deleted_at")
+            ->exists();
+
+        if ($classConflict) {
+            return redirect()->back()->withErrors(['class_id' => 'Kelas sudah dijadwalkan pada sesi dan hari yang sama.'])->withInput();
+        }
 
         // Simpan data lesson dengan session_id yang dipilih
         Lesson::create([

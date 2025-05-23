@@ -9,14 +9,20 @@ class AddSessionIdToLessonsTable extends Migration
     public function up()
     {
         Schema::table('lessons', function (Blueprint $table) {
-            $table->integer('session_id')->nullable()->after('teacher_id');  // Menambahkan kolom session_id setelah teacher_id
+            // Cara aman dan langsung: 
+            $table->foreignId('session_id')
+                  ->nullable()
+                  ->after('teacher_id')
+                  ->constrained('sessions')
+                  ->onDelete('set null');
         });
-    }
+    }    
     
     public function down()
     {
         Schema::table('lessons', function (Blueprint $table) {
-            $table->dropColumn('session_id');  // Menghapus kolom session_id jika migration di-rollback
+            $table->dropForeign(['session_id']);
+            $table->dropColumn('session_id');
         });
     }
-    }
+}
