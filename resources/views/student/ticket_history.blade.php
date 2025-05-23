@@ -1,5 +1,5 @@
 {{-- filepath: c:\Users\HP\Documents\PSI BARU\del-schedule\resources\views\student\ticket_history.blade.php --}}
-@extends('layouts.app')
+@extends('layouts.baa')
 
 @section('content')
 <div class="container">
