@@ -19,7 +19,7 @@ Route::get('/home', function () {
     $user = auth()->user();
     $routeName = $user && ($user->is_student || $user->is_teacher)
         ? 'admin.calendar.index'
-        : ($user->is_baa ? 'baa.dashboard' : 'admin.home');
+        : ($user->is_baa ? 'admin.calendar.index' : 'admin.home'); // <-- ubah di sini
 
     return redirect()->route($routeName)->with('status', session('status'));
 });

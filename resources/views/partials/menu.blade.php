@@ -8,7 +8,7 @@ $roleName = Auth::user()->roles->first()->name ?? null;
     <nav class="sidebar-nav">
 
         <ul class="nav">
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 @if ($roleId == 2)
                     <a href="{{ route('baa.dashboard') }}" class="nav-link">
                     @else
@@ -17,7 +17,7 @@ $roleName = Auth::user()->roles->first()->name ?? null;
                 <i class="nav-icon fas fa-fw fa-tachometer-alt"></i>
                 {{ trans('global.dashboard') }}
                 </a>
-            </li>
+            </li> --}}
             @can('user_management_access')
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link  nav-dropdown-toggle" href="#">
